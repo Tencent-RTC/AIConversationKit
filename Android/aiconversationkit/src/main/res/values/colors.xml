@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="conversation_bg_color_default">#000000</color>
+    <color name="conversation_text_color_primary">#E6FFFFFF</color>
+    <color name="conversation_text_color_primary95">#F3FFFFFF</color>
+
+    <color name="conversation_bg_color_operate">#1F2024</color>
+    <color name="conversation_text_color_tertiary">#4CFFFFFF</color>
+    <color name="conversation_text_color_disabled">#23FFFFFF</color>
+    <color name="conversation_text_color_secondary">#8CFFFFFF</color>
+    <color name="conversation_white_3">#C0FFFFFF</color>
+    <color name="conversation_white_7">#24FFFFFF</color>
+    <color name="conversation_bg_color_dialog">#1F2024</color>
+    <color name="conversation_bg_color_dialog_module">#2B2C30</color>
+    <color name="conversation_button_color_primary_default">#4086FF</color>
+    <color name="conversation_button_color_primary_disabled">#243047</color>
+    <color name="conversation_bg_black_4">#8C000000</color>
+</resources>

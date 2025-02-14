@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conversation_cl_main_panel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/conversation_bg_color_default"
+    android:orientation="vertical"
+    tools:context=".AIConversationActivity">
+
+    <com.trtc.uikit.aiconversationkit.view.conversation.DialogInterruptView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"/>
+
+    <ImageView
+        android:id="@+id/conversation_iv_ai_robot"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/conversation_ic_ai_robot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.trtc.uikit.aiconversationkit.view.conversation.AISpeechStateView
+        android:id="@+id/conversation_tv_ai_robot_speech_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/conversation_text_color_primary"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/conversation_iv_ai_robot"
+        app:layout_constraintTop_toTopOf="@+id/conversation_iv_ai_robot" />
+
+    <com.trtc.uikit.aiconversationkit.view.conversation.AISpeechTextView
+        android:id="@+id/conversation_tv_ai_robot_speech_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="5"
+        android:gravity="bottom"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/conversation_text_color_primary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/conversation_iv_ai_robot"
+        app:layout_constraintTop_toTopOf="@+id/conversation_iv_ai_robot" />
+
+    <com.trtc.uikit.aiconversationkit.view.conversation.AISpeechAnimationView
+        android:id="@+id/conversation_vv_ai_animation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/conversation_cl_local_panel"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conversation_iv_ai_robot" />
+
+    <com.trtc.uikit.aiconversationkit.view.conversation.TipInterruptView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/conversation_cl_local_panel"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/conversation_cl_local_panel"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_marginBottom="1px"
+        android:background="@drawable/conversation_bg_local_panel"
+        app:layout_constraintBottom_toTopOf="@+id/conversation_cl_tip"
+        tools:layout_editor_absoluteX="0dp">
+
+        <com.trtc.uikit.aiconversationkit.view.conversation.LocalAvatarView
+            android:id="@+id/conversation_view_local_avatar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.trtc.uikit.aiconversationkit.view.conversation.LocalSpeechSpectrumView
+            android:id="@+id/conversation_view_local_speech_spectrum"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/conversation_view_local_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/conversation_view_local_avatar"
+            app:layout_constraintTop_toTopOf="@+id/conversation_view_local_avatar" />
+
+        <com.trtc.uikit.aiconversationkit.view.conversation.LocalSpeechTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:gravity="bottom"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/conversation_view_local_speech_spectrum"
+            app:layout_constraintStart_toStartOf="@+id/conversation_view_local_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/conversation_view_local_avatar" />
+
+        <com.trtc.uikit.aiconversationkit.view.conversation.MuteToggleView
+            android:id="@+id/conversation_view_mute_toggle"
+            android:layout_width="74dp"
+            android:layout_height="78dp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/conversation_view_hang_up"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/conversation_view_local_avatar" />
+
+        <com.trtc.uikit.aiconversationkit.view.conversation.ConversationHangUpView
+            android:id="@+id/conversation_view_hang_up"
+            android:layout_width="110dp"
+            android:layout_height="78dp"
+            app:layout_constraintBottom_toBottomOf="@+id/conversation_view_mute_toggle"
+            app:layout_constraintEnd_toStartOf="@+id/conversation_view_speaker_toggle"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/conversation_view_mute_toggle" />
+
+        <com.trtc.uikit.aiconversationkit.view.conversation.SpeakerToggleView
+            android:id="@+id/conversation_view_speaker_toggle"
+            android:layout_width="74dp"
+            android:layout_height="78dp"
+            app:layout_constraintBottom_toBottomOf="@+id/conversation_view_mute_toggle"
+            app:layout_constraintEnd_toEndOf="@+id/conversation_view_local_speech_spectrum"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/conversation_view_hang_up" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/conversation_cl_tip"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:background="@color/conversation_bg_color_operate"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/conversation_iv_tip"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="26dp"
+            android:background="@drawable/conversation_ic_tip"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/conversation_iv_tip_experience"
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@string/conversation_tip_experience"
+            android:textColor="@color/conversation_text_color_tertiary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/conversation_iv_tip"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/conversation_view_tip_divide"
+            android:layout_width="1px"
+            android:layout_height="20dp"
+            android:background="@color/conversation_text_color_disabled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/conversation_iv_tip_time"
+            app:layout_constraintStart_toEndOf="@+id/conversation_iv_tip_experience"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.trtc.uikit.aiconversationkit.view.conversation.ExperienceDurationView
+            android:id="@+id/conversation_view_experience_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="26dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/conversation_iv_tip_time"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:text="@string/conversation_tip_left_time"
+            android:textColor="@color/conversation_text_color_tertiary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/conversation_view_experience_duration"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
