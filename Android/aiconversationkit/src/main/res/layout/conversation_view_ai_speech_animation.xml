@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/conversation_ll_operation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <VideoView
+        android:id="@+id/conversation_vv_ai_speech_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.trtc.uikit.aiconversationkit.view.conversation.AISpeechSpectrumView
+        android:id="@+id/conversation_view_ai_speech_spectrum"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="47dp"
+        android:layout_marginEnd="47dp"/>
+
+</FrameLayout>

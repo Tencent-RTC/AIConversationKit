@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="48dp"
+    android:layout_height="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/conversation_tv_tip_minute"
+        android:layout_width="21dp"
+        android:layout_height="20dp"
+        android:background="@drawable/conversation_bg_tip_time"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/conversation_text_color_secondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/conversation_tv_tip_top_dot"
+        android:layout_width="2dp"
+        android:layout_height="2dp"
+        android:background="@drawable/conversation_bg_tip_time_dot"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintStart_toEndOf="@+id/conversation_tv_tip_minute"
+        app:layout_constraintTop_toTopOf="@+id/conversation_tv_tip_minute"
+        app:layout_constraintBottom_toTopOf="@+id/conversation_tv_tip_bottom_dot"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <ImageView
+        android:id="@+id/conversation_tv_tip_bottom_dot"
+        android:layout_width="2dp"
+        android:layout_height="2dp"
+        android:background="@drawable/conversation_bg_tip_time_dot"
+        app:layout_constraintStart_toStartOf="@+id/conversation_tv_tip_top_dot"
+        app:layout_constraintTop_toBottomOf="@+id/conversation_tv_tip_top_dot"
+        app:layout_constraintBottom_toBottomOf="@+id/conversation_tv_tip_minute"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/conversation_tv_tip_second"
+        android:layout_width="21dp"
+        android:layout_height="20dp"
+        android:background="@drawable/conversation_bg_tip_time"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/conversation_text_color_secondary"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toEndOf="@+id/conversation_tv_tip_top_dot"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,41 @@
+<resources>
+    <string name="conversation_ai_conversation">AI对话</string>
+    <string name="conversation_language_zh">中文</string>
+    <string name="conversation_language_en">英文</string>
+    <string name="conversation_tip_welcome">你好呀，我是腾讯云音视频的 AI 智能助手！你可以体验和我语音对话，问我问题或者寻求建议，我很期待和你聊天。😄</string>
+    <string name="conversation_tip_security">对话内容由第三方 AI 生成，仅供体验参考，具体请以实际接入的 AI 模型为准。请勿输入个人信息及其他违法违规内容，合规体验。</string>
+    <string name="conversation_tip_time">体验时长只有 5 分钟，要抓紧时间噢～</string>
+    <string name="conversation_voice_dialogue">语音对话</string>
+
+    <string name="conversation_ai_state_listening">我在听…</string>
+    <string name="conversation_ai_state_thinking">思考中…</string>
+    <string name="conversation_tip_experience">内容由第三方AI生成，仅供体验参考</string>
+    <string name="conversation_tip_left_time">体验时长</string>
+    <string name="conversation_permission_mic_reason_title">%s申请获取麦克风权限</string>
+    <string name="conversation_permission_mic_reason">需要访问您的麦克风权限，开启后用于一起合唱、Karaoke、语音聊天室、语音沙龙、视频互动、秀场直播、语音通话、多人语音通话、视频通话、多人视频通话、多人音视频房间等功能，并且开启后录制的视频才会有声音</string>
+    <string name="conversation_tips_start_audio">请先打开麦克风权限</string>
+    <string name="conversation_mic_mute">静音</string>
+    <string name="conversation_mic_unmute">解除静音</string>
+    <string name="conversation_open_speaker">开扬声器</string>
+    <string name="conversation_close_speaker">关扬声器</string>
+    <string name="conversation_pause">暂停</string>
+    <string name="conversation_continue">继续</string>
+    <string name="conversation_hang_up">挂断</string>
+    <string name="conversation_tap_to_interrupt">可以轻触屏幕或者说话打断回答</string>
+    <string name="conversation_tip_experience_time_out">体验时长已结束，如需继续体验或了解更多，请联系我们</string>
+    <string name="conversation_close">关闭</string>
+    <string name="conversation_contact_us">联系我们</string>
+    <string name="conversation_is_satisfied_conversation">您对本次对话满意吗？</string>
+    <string name="conversation_very_dissatisfied">非常不满</string>
+    <string name="conversation_dissatisfied">不满意</string>
+    <string name="conversation_neutral">一般</string>
+    <string name="conversation_satisfied">比较满意</string>
+    <string name="conversation_very_satisfied">非常满意</string>
+    <string name="conversation_call_latency">通话延时</string>
+    <string name="conversation_noise_suppression">降噪效果</string>
+    <string name="conversation_ai_response">AI 回答效果</string>
+    <string name="conversation_interactive_experience">交互体验</string>
+    <string name="conversation_enter_your_suggestions">请输入您的建议与意见</string>
+    <string name="conversation_skip">跳过</string>
+    <string name="conversation_submit_feedback">提交评价</string>
+</resources>

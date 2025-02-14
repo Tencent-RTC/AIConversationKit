@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/conversation_bg_color_default">
+
+    <com.trtc.uikit.aiconversationkit.view.feedback.DialogSatisfactionView
+        android:id="@+id/conversation_view_dialog_satisfaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.trtc.uikit.aiconversationkit.view.feedback.FeedbackStarView
+        android:id="@+id/conversation_view_call_latency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:text="@string/conversation_call_latency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conversation_view_dialog_satisfaction"/>
+
+    <com.trtc.uikit.aiconversationkit.view.feedback.FeedbackStarView
+        android:id="@+id/conversation_view_noise_suppression"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:text="@string/conversation_noise_suppression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conversation_view_call_latency"/>
+
+    <com.trtc.uikit.aiconversationkit.view.feedback.FeedbackStarView
+        android:id="@+id/conversation_view_ai_response"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:text="@string/conversation_ai_response"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conversation_view_noise_suppression"/>
+
+    <com.trtc.uikit.aiconversationkit.view.feedback.FeedbackStarView
+        android:id="@+id/conversation_view_interactive_experience"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:text="@string/conversation_interactive_experience"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conversation_view_ai_response"/>
+
+    <EditText
+        android:id="@+id/conversation_view_enter_suggestions"
+        android:layout_width="329dp"
+        android:layout_height="146dp"
+        android:background="@drawable/conversation_bg_enter_suggestion"
+        android:hint="@string/conversation_enter_your_suggestions"
+        android:gravity="top"
+        android:padding="10dp"
+        android:textColor="@color/conversation_text_color_primary95"
+        android:textSize="14sp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conversation_view_interactive_experience"/>
+
+    <Button
+        android:id="@+id/conversation_btn_skip_feedback"
+        android:layout_width="108dp"
+        android:layout_height="48dp"
+        android:background="@drawable/conversation_bg_skip_feedback"
+        android:text="@string/conversation_skip"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="@+id/conversation_view_enter_suggestions"
+        app:layout_constraintEnd_toStartOf="@+id/conversation_btn_upload_feedback"
+        app:layout_constraintTop_toTopOf="@+id/conversation_btn_upload_feedback"/>
+
+    <Button
+        android:id="@+id/conversation_btn_upload_feedback"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/conversation_bg_upload_feedback_disabled"
+        android:text="@string/conversation_submit_feedback"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toEndOf="@+id/conversation_btn_skip_feedback"
+        app:layout_constraintEnd_toEndOf="@+id/conversation_view_enter_suggestions"
+        app:layout_constraintTop_toBottomOf="@+id/conversation_view_enter_suggestions"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

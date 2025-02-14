@@ -1,0 +1,56 @@
+import org.gradle.util.VersionNumber
+
+apply plugin: 'com.android.library'
+def projects = this.rootProject.getAllprojects().stream().map { project -> project.name }.collect()
+
+android {
+    namespace "com.trtc.uikit.aiconversationkit"
+    compileSdk 33
+
+    defaultConfig {
+        minSdkVersion 19
+        multiDexEnabled = true
+        targetSdkVersion 33
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    def roomSourceJavaVersion = JavaVersion.VERSION_1_8
+    VersionNumber currentGradleVersion = VersionNumber.parse(gradle.gradleVersion)
+    if (currentGradleVersion.major >= 8) {
+        roomSourceJavaVersion = JavaVersion.VERSION_17
+    }
+
+    compileOptions {
+        sourceCompatibility roomSourceJavaVersion
+        targetCompatibility roomSourceJavaVersion
+    }
+}
+
+dependencies {
+    implementation rootProject.getProperties().containsKey("liteavSdk") ? rootProject.ext.liteavSdk : "com.tencent.liteav:LiteAVSDK_TRTC:12.3.0.17115"
+    if (projects.contains("tuicore")) {
+        api project(':tuicore')
+    } else {
+        api "com.tencent.liteav.tuikit:tuicore:8.4.6667"
+    }
+    if (projects.contains("common")) {
+        api project(':common')
+    } else {
+        api 'io.trtc.uikit:common:2.8.0.634'
+    }
+
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+}
