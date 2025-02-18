@@ -1,0 +1,63 @@
+PODS:
+  - AIConversationKit/Professional (1.0.0):
+    - Kingfisher
+    - Masonry
+    - RTCCommon
+    - SDWebImage
+    - TUICore
+    - TXLiteAVSDK_Professional
+  - Kingfisher (8.2.0)
+  - Masonry (1.1.0)
+  - RTCCommon (1.1.0):
+    - SnapKit
+  - SDWebImage (5.20.0):
+    - SDWebImage/Core (= 5.20.0)
+  - SDWebImage/Core (5.20.0)
+  - SnapKit (5.7.1)
+  - TUICore (8.4.6667):
+    - SDWebImage
+    - TUICore/ImSDK_Plus (= 8.4.6667)
+  - TUICore/Base (8.4.6667):
+    - SDWebImage
+  - TUICore/ImSDK_Plus (8.4.6667):
+    - SDWebImage
+    - TUICore/Base
+    - TXIMSDK_Plus_iOS_XCFramework
+  - TXIMSDK_Plus_iOS_XCFramework (8.4.6675)
+  - TXLiteAVSDK_Professional (12.3.16995):
+    - TXLiteAVSDK_Professional/Professional (= 12.3.16995)
+  - TXLiteAVSDK_Professional/Professional (12.3.16995)
+
+DEPENDENCIES:
+  - AIConversationKit/Professional (from `../AIConversationKit.podspec`)
+  - TXLiteAVSDK_Professional
+
+SPEC REPOS:
+  trunk:
+    - Kingfisher
+    - Masonry
+    - RTCCommon
+    - SDWebImage
+    - SnapKit
+    - TUICore
+    - TXIMSDK_Plus_iOS_XCFramework
+    - TXLiteAVSDK_Professional
+
+EXTERNAL SOURCES:
+  AIConversationKit:
+    :path: "../AIConversationKit.podspec"
+
+SPEC CHECKSUMS:
+  AIConversationKit: 2baf8c0d52b26231a4fb108e7c7eb9b941e7091e
+  Kingfisher: 323e5c4ec7983aaace12af655a7b51a7f88a599d
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  RTCCommon: cfd30f124519be2473f8b08d7d77dd1cde778a80
+  SDWebImage: 73c6079366fea25fa4bb9640d5fb58f0893facd8
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  TUICore: 798f1db24c5e3ada1db90431904a3f63ff612061
+  TXIMSDK_Plus_iOS_XCFramework: ce4435718ef7d893ed5c0c9cb7ddb81253db9f4c
+  TXLiteAVSDK_Professional: 6e8fa18eeb0e52e6bbbcd97bab9ec9fbdc828df3
+
+PODFILE CHECKSUM: cb8da09f90bf3f11f71588e9505c2b4d8bd3049d
+
+COCOAPODS: 1.16.2

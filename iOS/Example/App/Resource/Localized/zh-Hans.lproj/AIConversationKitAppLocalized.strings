@@ -1,0 +1,53 @@
+/* 
+  AIConversationKitLocalized.strings
+  AIConversationKit
+
+  Created by krabyu on 2023/10/18.
+  
+*/
+"AIConversationKit.Login.tencentcloud" = "腾讯云音视频";
+"AIConversationKit.Login.enterphonenumber" = "请输入用户名";
+"AIConversationKit.Login.enterverificationcode" = "请输入验证码";
+"AIConversationKit.Login.getverificationcode" = "获取验证码";
+"AIConversationKit.login" = "登录";
+"AIConversationKit.Login.loginsuccess" = "登录成功";
+"AIConversationKit.Login.register" = "注册";
+"AIConversationKit.Login.enterusername" = "请输入用户昵称";
+"AIConversationKit.Login.limit20count" = "仅限中文、字母、数字和下划线，2-20个字";
+"AIConversationKit.Login.registersuccess" = "注册成功";
+"AIConversationKit.Main.videointeraction" = "视频互动";
+"AIConversationKit.Main.startLiveStream" = "开始直播";
+"AIConversationKit.Main.enterLiveStreamList" = "直播间列表";
+"AIConversationKit.Main.streamId" = "直播间号  ";
+"AIConversationKit.Main.joinLiveStream" = "加入直播";
+"AIConversationKit.Main.joinStreamId" = "请输入直播间号";
+"AIConversationKit.Main.streamdoesnotexist" = "当前直播间不存在";
+"AIConversationKit.Main.areyousureloginout" = "确定退出当前账号吗？";
+"AIConversationKit.Main.cancel" = "取消";
+"AIConversationKit.Main.determine" = "确定";
+"AIConversationKit.Main.cancel" = "取消";
+"AIConversationKit.Main.confirm" = "确定";
+"AIConversationKit.Main.video" = "视频直播";
+"AIConversationKit.Main.audio" = "语音直播";
+"AIConversationKit.Main.liveRoomList" = "直播间列表";
+"AIConversationKit.Main.Live" = "直播";
+"AIConversationKit.Main.SelfInfo" = "个人信息";
+"AIConversationKit.Main.Me" = "我";
+"AIConversationKit.Main.Likes" = "关注";
+"AIConversationKit.Main.Fans" = "粉丝";
+"AIConversationKit.Main.Name" = "昵称";
+"AIConversationKit.Main.Save" = "保存";
+"AIConversationKit.Main.Operate.Success" = "操作成功";
+"AIConversationKit.Main.experienceDesc" = "内容由第三方AI生成，仅供体验参考";
+"AIConversationKit.Main.experienceDuration" = "体验时长";
+"AIConversationKit.Main.experienceEndDesc" = "体验时长已结束，如需继续体验或了解更多，请联系我们";
+"AIConversationKit.Main.contactus" = "联系我们";
+"AIConversationKit.Main.close" = "关闭";
+"AIConversationKit.Main.welcome" = "你好呀，我是腾讯云音视频的 AI 智能助手！你可以体验和我语音对话，问我问题或者寻求建议，我很期待和你聊天。😄";
+"AIConversationKit.Main.policyDesc" = "对话内容由第三方 AI 生成，仅供体验参考，具体请以实际接入的 AI 模型为准。请勿输入个人信息及其他违法违规内容，合规体验。";
+"AIConversationKit.Main.timeLimitDesc" = "体验时长只有 5 分钟，要抓紧时间噢～";
+"AIConversationKit.Animation.interrupAIDesc" = "可以轻触屏幕或者说话打断回答";
+"AIConversationKit.Entr.LanguageEN" = "英文";
+"AIConversationKit.Entr.LanguageCN" = "中文";
+"AIConversationKit.Entr.title" = "AI通话";
+"AIConversationKit.Entr.start" = "语音通话";
