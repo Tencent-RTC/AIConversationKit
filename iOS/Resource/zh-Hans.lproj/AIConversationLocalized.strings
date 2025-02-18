@@ -1,0 +1,43 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by einhorn on 2024/10/16.
+  
+*/
+"AIConversation.Fuction.mute" = "静音";
+"AIConversation.Fuction.unmute" = "解除静音";
+"AIConversation.Fuction.speakerOn" = "开扬声器";
+"AIConversation.Fuction.speakerOff" = "关扬声器";
+"AIConversation.Fuction.playPause" = "暂停";
+"AIConversation.Fuction.playResume" = "继续";
+"AIConversation.Fuction.hangUp" = "挂断";
+"AIConversation.Entr.LanguageEN" = "英文";
+"AIConversation.Entr.LanguageCN" = "中文";
+"AIConversation.Entr.title" = "AI通话";
+"AIConversation.Entr.start" = "语音通话";
+"AIConversation.AIReply.thinking" = "思考中...";
+"AIConversation.AIReply.replying" = "回答中...";
+"AIConversation.AIReply.listening" = "我在听...";
+"AIConversation.Evaluation.AIVeryNice" = "非常满意";
+"AIConversation.Evaluation.AINice" = "满意";
+"AIConversation.Evaluation.Neutral" = "一般";
+"AIConversation.Evaluation.Dissatisfied" = "不满意";
+"AIConversation.Evaluation.VeryDissatisfied" = "非常不满意";
+"AIConversation.Evaluation.callLatency" = "通话延时";
+"AIConversation.Evaluation.NoiseSuppression" = "降噪效果";
+"AIConversation.Evaluation.AIResponse" = "AI回答效果";
+"AIConversation.Evaluation.InteractiveExperience" = "交互体验";
+"AIConversation.Evaluation.Title" = "您对本次对话满意吗？";
+"AIConversation.Evaluation.CommentPlaceHolder" = "请输入您的建议与意见";
+"AIConversation.Evaluation.Submit" = "提交评价";
+"AIConversation.Evaluation.Skip" = "跳过";
+"AIConversation.Main.experienceDesc" = "内容由第三方AI生成，仅供体验参考";
+"AIConversation.Main.experienceDuration" = "体验时长";
+"AIConversation.Main.experienceEndDesc" = "体验时长已结束，如需继续体验或了解更多，请联系我们";
+"AIConversation.Main.contactus" = "联系我们";
+"AIConversation.Main.close" = "关闭";
+"AIConversation.Main.welcome" = "你好呀，我是腾讯云音视频的 AI 智能助手！你可以体验和我语音对话，问我问题或者寻求建议，我很期待和你聊天。😄";
+"AIConversation.Main.policyDesc" = "对话内容由第三方 AI 生成，仅供体验参考，具体请以实际接入的 AI 模型为准。请勿输入个人信息及其他违法违规内容，合规体验。";
+"AIConversation.Main.timeLimitDesc" = "体验时长只有 5 分钟，要抓紧时间噢～";
+"AIConversation.Animation.interrupAIDesc" = "可以轻触屏幕或者说话打断回答";
