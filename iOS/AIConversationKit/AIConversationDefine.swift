@@ -17,15 +17,15 @@ let TencentRTCBDID = "com.tencent.rtc.app"
 public class AIConversationDefine {
     
     public class StartAIConversationParams: ConfigEncodable {
-        public var secretId: String = ""
-        public var secretKey: String = ""
-        public var agentConfig: AgentConfig? // Required field
+        public var secretId: String = ""                    // Required field
+        public var secretKey: String = ""                   // Required field
+        public var agentConfig: AgentConfig = AgentConfig() // Required field
         public var sttConfig: STTConfig?
-        public var llmConfig: String? // Required field
-        public var ttsConfig: String? // Required field
+        public var llmConfig: String = ""                   // Required field
+        public var ttsConfig: String = ""                   // Required field
         public var region: String?
-        public var roomId: String
-
+        public var roomId: String?
+ 
         enum CodingKeys: String, CodingKey {
             case agentConfig = "AgentConfig"
             case sttConfig = "STTConfig"
@@ -61,10 +61,10 @@ public class AIConversationDefine {
         
         required public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.agentConfig = try container.decodeIfPresent(AgentConfig.self, forKey: .agentConfig)
+            self.agentConfig = try container.decodeIfPresent(AgentConfig.self, forKey: .agentConfig) ?? AgentConfig()
             self.sttConfig = try container.decodeIfPresent(STTConfig.self, forKey: .sttConfig)
-            self.llmConfig = try container.decodeIfPresent(String.self, forKey: .llmConfig)
-            self.ttsConfig = try container.decodeIfPresent(String.self, forKey: .ttsConfig)
+            self.llmConfig = try container.decodeIfPresent(String.self, forKey: .llmConfig) ?? ""
+            self.ttsConfig = try container.decodeIfPresent(String.self, forKey: .ttsConfig) ?? ""
             self.roomId = try container.decode(String.self, forKey: .roomId)
         }
         
