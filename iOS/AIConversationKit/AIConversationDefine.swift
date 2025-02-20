@@ -133,7 +133,7 @@ public class AIConversationDefine {
         required public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.aiRobotId = try container.decodeIfPresent(String.self, forKey: .aiRobotId) ?? ""
-            self.aiRobotSig = try container.decodeIfPresent(String.self, forKey: .aiRobotId) ?? ""
+            self.aiRobotSig = try container.decodeIfPresent(String.self, forKey: .aiRobotSig) ?? ""
             self.welcomeMessage = try container.decodeIfPresent(String.self, forKey: .welcomeMessage)
             self.maxIdleTime = try container.decodeIfPresent(Int.self, forKey: .maxIdleTime)
             self.interruptMode = try container.decodeIfPresent(Int.self, forKey: .interruptMode)
