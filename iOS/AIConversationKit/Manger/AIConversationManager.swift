@@ -10,7 +10,7 @@ import TXLiteAVSDK_Professional
 import TUICore
 
 class AIConversationManager: NSObject {
-    var trtcCloud: TRTCCloud?
+    var trtcCloud = TRTCCloud.sharedInstance()
     var timer: Timer?
     var robotId: String?
     var roomId: Int?
@@ -19,29 +19,29 @@ class AIConversationManager: NSObject {
     var request: AIConversationRequest? = nil
     
     static let instance = AIConversationManager()
-
+    
     func enableAIDenoise() {
-        setExperimentConfig(key: "enableAIDenoise", params: ["params": ["enable": true,],])
+        setExperimentConfig(key: "enableAIDenoise", params: ["enable": true,])
         setExperimentConfig(key: "setPrivateConfig",
-                            params: ["params":
-                                        ["configs":
-                                            ["key":"Liteav.Audio.common.ans.version",
-                                             "default":"0",
-                                             "value":"4",],
-                                        ],])
-        setExperimentConfig(key: "setAudioAINSStyle", params: ["params": ["style": "4",],])
-        setExperimentConfig(key: "enableAudioAGC", params: ["params": ["enable": false,],])
-        setExperimentConfig(key: "setLocalAudioMuteMode", params: ["params": ["mode": 0,],])
+                            params:["configs":
+                                        ["key":"Liteav.Audio.common.ans.version",
+                                         "default":"0",
+                                         "value":"4",],
+                                   ])
+        setExperimentConfig(key: "setAudioAINSStyle", params:["style": "4",])
+        setExperimentConfig(key: "enableAudioAGC", params: ["enable": false,])
+        setExperimentConfig(key: "setLocalAudioMuteMode", params:["mode": 0,])
     }
-   
+    
     
     func start(aiParams: StartAIConversationParams?) {
+        setExperimentConfig(key: "setFramework", params:["component":25 ,"framework": 1, "language":3,])
         setUpTRTC(withSDKAppId: TUILogin.getSdkAppID(),
                   roomId: aiParams?.roomId,
                   userId: TUILogin.getUserID(),
                   userSig:TUILogin.getUserSig())
         
-  
+        
         if !isAppStoreDemo() {
             request = ClientAIConversationRequest()
         } else {
@@ -64,23 +64,22 @@ class AIConversationManager: NSObject {
     }
     
     func setUpTRTC(withSDKAppId sdkappId: Int32?,  roomId: String?, userId: String?, userSig: String?) {
-        trtcCloud = TRTCCloud.sharedInstance()
         let trtcParam = TRTCParams()
         trtcParam.sdkAppId = UInt32(sdkappId ?? 0)
         trtcParam.strRoomId = roomId ?? ""
         trtcParam.userId = userId ?? ""
         trtcParam.userSig = userSig ?? ""
-        trtcCloud?.enterRoom(trtcParam, appScene: .audioCall)
-        trtcCloud?.startLocalAudio(.speech)
-        trtcCloud?.setSystemVolumeType(.media)
-        trtcCloud?.addDelegate(self)
-        trtcCloud?.setAudioFrameDelegate(self)
+        trtcCloud.enterRoom(trtcParam, appScene: .audioCall)
+        trtcCloud.startLocalAudio(.speech)
+        trtcCloud.setSystemVolumeType(.media)
+        trtcCloud.addDelegate(self)
+        trtcCloud.setAudioFrameDelegate(self)
         let volumeEvalParam = TRTCAudioVolumeEvaluateParams()
         volumeEvalParam.enableSpectrumCalculation = true
         volumeEvalParam.interval = 100
         volumeEvalParam.enableVadDetection = true
-        trtcCloud?.enableAudioVolumeEvaluation(true, with: volumeEvalParam)
-        trtcCloud?.setAudioRoute(.modeSpeakerphone)
+        trtcCloud.enableAudioVolumeEvaluation(true, with: volumeEvalParam)
+        trtcCloud.setAudioRoute(.modeSpeakerphone)
     }
     
     func startCountTime() {
@@ -91,13 +90,13 @@ class AIConversationManager: NSObject {
                                                                         userInfo: nil,
                                                                         repeats: true)
         }
-      
+        
     }
     
-  
+    
     
     func stop() {
-       
+        
         request?.stop(taskID: taskId ?? "")
         if !isAppStoreDemo() {
             exit(0)
@@ -107,20 +106,20 @@ class AIConversationManager: NSObject {
         AIConversationState.instance.conversationState.value = .stop
         AIConversationManager.instance.timer?.invalidate()
         AIConversationManager.instance.timer = nil
-        AIConversationManager.instance.trtcCloud?.exitRoom()
+        AIConversationManager.instance.trtcCloud.exitRoom()
         TRTCCloud.destroySharedInstance()
-  
+        
     }
     
     func resume() {
         AIConversationState.instance.conversationState.value = .start
-        trtcCloud?.callExperimentalAPI("{\"api\":\"pauseRemoteAudioStream\",\"params\":{\"pause\":\(0), \"maxCacheTimeInMs\":\(0)}}")
+        trtcCloud.callExperimentalAPI("{\"api\":\"pauseRemoteAudioStream\",\"params\":{\"pause\":\(0), \"maxCacheTimeInMs\":\(0)}}")
     }
     
     func pause() {
         AIConversationState.instance.conversationState.value = .pause
         let maxCacheTimeInMs = 60 * 1_000
-        trtcCloud?.callExperimentalAPI("{\"api\":\"pauseRemoteAudioStream\",\"params\":{\"pause\":\(1), \"maxCacheTimeInMs\":\(maxCacheTimeInMs)}}")
+        trtcCloud.callExperimentalAPI("{\"api\":\"pauseRemoteAudioStream\",\"params\":{\"pause\":\(1), \"maxCacheTimeInMs\":\(maxCacheTimeInMs)}}")
     }
     
     func interuptAI() {
@@ -132,7 +131,7 @@ class AIConversationManager: NSObject {
         let payload = [
             "id": TUILogin.getUserID() ?? "" +
             "\(String(describing: AIConversationManager.instance.roomId))" +
-            "\(timestamp)", 
+            "\(timestamp)",
             "timestamp": timestamp,
         ] as [String : Any]
         let dict = [
@@ -143,27 +142,27 @@ class AIConversationManager: NSObject {
         ] as [String : Any]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
-            trtcCloud?.sendCustomCmdMsg(cmdId, data: jsonData, reliable: true, ordered: true)
+            trtcCloud.sendCustomCmdMsg(cmdId, data: jsonData, reliable: true, ordered: true)
         } catch {
             print("Error serializing dictionary to JSON: \(error)")
         }
     }
     
     func muteLocalAudio(_ mute: Bool) {
-        trtcCloud?.muteLocalAudio(mute)
+        trtcCloud.muteLocalAudio(mute)
         AIConversationState.instance.audioMuted.value = mute
         
     }
     
     func openSpeaker(isOpen open: Bool) {
         if open == true {
-            trtcCloud?.setAudioRoute(.modeSpeakerphone)
+            trtcCloud.setAudioRoute(.modeSpeakerphone)
             AIConversationState.instance.speakerIsOpen.value = true
         } else {
-            trtcCloud?.setAudioRoute(.modeEarpiece)
+            trtcCloud.setAudioRoute(.modeEarpiece)
             AIConversationState.instance.speakerIsOpen.value = false
         }
-       
+        
     }
 }
 
@@ -267,7 +266,7 @@ extension AIConversationManager {
 }
 
 extension AIConversationManager {
-
+    
 }
 
 extension AIConversationManager {
@@ -333,10 +332,10 @@ extension AIConversationManager {
         
         if let jsonData = try? JSONSerialization.data(withJSONObject: json, options: []),
            let jsonStr = String(data: jsonData, encoding: .utf8) {
-            AIConversationManager.instance.trtcCloud?.callExperimentalAPI(jsonStr)
+            AIConversationManager.instance.trtcCloud.callExperimentalAPI(jsonStr)
         }
     }
-
+    
 }
 extension AIConversationManager {
     func isAppStoreDemo() -> Bool {
