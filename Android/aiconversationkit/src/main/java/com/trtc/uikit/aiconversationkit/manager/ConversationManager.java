@@ -230,6 +230,7 @@ public class ConversationManager {
         trtcParams.userId = TUILogin.getUserId();
         trtcParams.strRoomId = roomId;
         trtcParams.userSig = TUILogin.getUserSig();
+        mTRTCCloud.callExperimentalAPI("{\"api\":\"setFramework\",\"params\":{\"component\":25,\"framework\":1,\"language\":1}}");
         mTRTCCloud.callExperimentalAPI("{\"api\":\"enableAIDenoise\",\"params\":{\"enable\":true}}");
         // AI denoising version switched to the latest version
         mTRTCCloud.callExperimentalAPI("{\"api\":\"setPrivateConfig\",\"params\":{\"configs\":"
