@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,12 +23,9 @@
 		9535E1932D2BB53E0068C6BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9535E1872D2BB53E0068C6BC /* Assets.xcassets */; };
 		9535E1952D2BB53E0068C6BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9535E18A2D2BB53E0068C6BC /* LaunchScreen.storyboard */; };
 		9535E1962D2BB53E0068C6BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9535E18C2D2BB53E0068C6BC /* Main.storyboard */; };
-		FFCF5526020B7D9EDB602BB1 /* Pods_AIConversationApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E5A05C67D40713571E7115 /* Pods_AIConversationApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1AA95A6FE6A474DA11DD1233 /* Pods-AIConversationApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIConversationApp.debug.xcconfig"; path = "Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp.debug.xcconfig"; sourceTree = "<group>"; };
-		32E5A05C67D40713571E7115 /* Pods_AIConversationApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AIConversationApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3323F5862D579BBE00477311 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		3329314D2D37974B00EC8F5A /* GenerateTestUserSig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateTestUserSig.swift; sourceTree = "<group>"; };
 		332931502D3798FE00EC8F5A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -41,7 +38,6 @@
 		3329315A2D3798FE00EC8F5A /* LaunchImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage@2x.png"; sourceTree = "<group>"; };
 		3329315B2D3798FE00EC8F5A /* LaunchImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage@3x.png"; sourceTree = "<group>"; };
 		334920502D5CA2B700EB5F57 /* Config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Config.json; sourceTree = "<group>"; };
-		8954ACD704B28DD6553BC35A /* Pods-AIConversationApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIConversationApp.release.xcconfig"; path = "Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp.release.xcconfig"; sourceTree = "<group>"; };
 		9535E16E2D2BB3CE0068C6BC /* AIConversationApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIConversationApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9535E1862D2BB53E0068C6BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9535E1872D2BB53E0068C6BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,7 +53,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFCF5526020B7D9EDB602BB1 /* Pods_AIConversationApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,8 +62,6 @@
 		12C2F5A45F97ED61C10810E3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1AA95A6FE6A474DA11DD1233 /* Pods-AIConversationApp.debug.xcconfig */,
-				8954ACD704B28DD6553BC35A /* Pods-AIConversationApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -111,7 +104,6 @@
 				9535E18F2D2BB53E0068C6BC /* App */,
 				9535E16F2D2BB3CE0068C6BC /* Products */,
 				12C2F5A45F97ED61C10810E3 /* Pods */,
-				A5CFAAF6CDA41F3636C62E9C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,14 +131,6 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		A5CFAAF6CDA41F3636C62E9C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				32E5A05C67D40713571E7115 /* Pods_AIConversationApp.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -154,12 +138,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9535E1812D2BB3CF0068C6BC /* Build configuration list for PBXNativeTarget "AIConversationApp" */;
 			buildPhases = (
-				B066EE68973C614D6CD05FD1 /* [CP] Check Pods Manifest.lock */,
 				9535E16A2D2BB3CE0068C6BC /* Sources */,
 				9535E16B2D2BB3CE0068C6BC /* Frameworks */,
 				9535E16C2D2BB3CE0068C6BC /* Resources */,
-				6322180E328B8493DBE688EF /* [CP] Embed Pods Frameworks */,
-				B3D62A16462BE92BD142A8E0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -186,7 +167,6 @@
 				};
 			};
 			buildConfigurationList = 9535E1692D2BB3CE0068C6BC /* Build configuration list for PBXProject "AIConversationApp" */;
-			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -196,6 +176,7 @@
 			);
 			mainGroup = 9535E1652D2BB3CE0068C6BC;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 9535E16F2D2BB3CE0068C6BC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -224,65 +205,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		6322180E328B8493DBE688EF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B066EE68973C614D6CD05FD1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AIConversationApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B3D62A16462BE92BD142A8E0 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9535E16A2D2BB3CE0068C6BC /* Sources */ = {
@@ -340,7 +262,6 @@
 /* Begin XCBuildConfiguration section */
 		9535E1822D2BB3CF0068C6BC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1AA95A6FE6A474DA11DD1233 /* Pods-AIConversationApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -378,7 +299,6 @@
 		};
 		9535E1832D2BB3CF0068C6BC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8954ACD704B28DD6553BC35A /* Pods-AIConversationApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
