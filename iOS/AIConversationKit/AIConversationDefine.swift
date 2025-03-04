@@ -248,7 +248,7 @@ public class AIConversationDefine {
     }
 
 
-    public protocol ConfigEncodable: Encodable, Codable {}
 
 }
 
+public protocol ConfigEncodable: Encodable, Codable {}
