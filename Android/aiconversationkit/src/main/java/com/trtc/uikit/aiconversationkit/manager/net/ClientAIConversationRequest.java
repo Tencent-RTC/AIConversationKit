@@ -50,7 +50,7 @@ public class ClientAIConversationRequest implements AIConversationRequest {
         mSecretKey = params.secretKey;
         mRegion = params.region;
         String body = generateStartConversationBody(params);
-        Log.i(TAG, "startConversation : " + body);
+        Log.i(TAG, String.format("startConversation roomId=%s userId=%s", params.roomId, TUILogin.getUserId()));
 
         Runnable startAIConversationRun = () -> {
             Request request = buildRequest(mSecretId, mSecretKey, VERSION, ACTION_START_AI_CONVERSATION, body,
