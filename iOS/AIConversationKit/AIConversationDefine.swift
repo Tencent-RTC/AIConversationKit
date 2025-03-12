@@ -43,7 +43,7 @@ public class AIConversationDefine {
             self.ttsConfig = ""
             self.sttConfig = STTConfig()
             self.region = "ap-beijing"
-            self.roomId = ""
+            self.roomId = TUILogin.getUserID()
         }
 
         
