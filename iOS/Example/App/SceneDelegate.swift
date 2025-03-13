@@ -7,6 +7,7 @@
 
 import UIKit
 import AIConversationKit
+import TUICore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,9 +23,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
         self.window?.backgroundColor = UIColor.white
-        let startAIParams = getStartAIConversationParams()
-        let rootVC = AIConversationViewController(aiParams: startAIParams)
-        let nav = UINavigationController(rootViewController: rootVC)
+        var rootVC: UIViewController? = nil
+        if let startAIParams = getStartAIConversationParams() {
+            rootVC = AIConversationViewController(aiParams: startAIParams)
+        } else {
+            rootVC = MainViewController()
+        }
+       
+        let nav = UINavigationController(rootViewController: rootVC ?? MainViewController())
         self.window?.rootViewController = nav
         self.window?.makeKeyAndVisible()
     }

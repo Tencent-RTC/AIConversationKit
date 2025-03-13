@@ -16,32 +16,42 @@ class AIConversationManager: NSObject {
     var roomId: Int?
     var updatetimerCount = 0
     var taskId: String?
+    var startAIParams: StartAIConversationParams?
     var request: AIConversationRequest? = nil
     
     static let instance = AIConversationManager()
-    
+
     func enableAIDenoise() {
-        setExperimentConfig(key: "enableAIDenoise", params: ["enable": true,])
+        setExperimentConfig(key: "enableAIDenoise", params:["enable": true,])
+        
         setExperimentConfig(key: "setPrivateConfig",
                             params:["configs":
-                                        ["key":"Liteav.Audio.common.ans.version",
-                                         "default":"0",
-                                         "value":"4",],
-                                   ])
+                                            ["key":"Liteav.Audio.common.ans.version",
+                                             "default":"0",
+                                             "value":"4",],
+                                        ])
+        setExperimentConfig(key: "setPrivateConfig",
+                            params:["configs":
+                                            ["key":"Liteav.Audio.common.ains.near.field.threshold",
+                                             "default":"50",
+                                             "value":"\(startAIParams?.denoise ?? 50)",],
+                                        ])
         setExperimentConfig(key: "setAudioAINSStyle", params:["style": "4",])
-        setExperimentConfig(key: "enableAudioAGC", params: ["enable": false,])
-        setExperimentConfig(key: "setLocalAudioMuteMode", params:["mode": 0,])
+        setExperimentConfig(key: "enableAudioAGC", params:["enable": false,])
+        setExperimentConfig(key: "setLocalAudioMuteMode", params: ["mode": 0,])
     }
-    
+   
     
     func start(aiParams: StartAIConversationParams?) {
         setExperimentConfig(key: "setFramework", params:["component":25 ,"framework": 1, "language":3,])
+        startAIParams = aiParams
+        aiParams?.roomId = TUILogin.getUserID()
         setUpTRTC(withSDKAppId: TUILogin.getSdkAppID(),
                   roomId: aiParams?.roomId,
                   userId: TUILogin.getUserID(),
                   userSig:TUILogin.getUserSig())
         
-        
+  
         if !isAppStoreDemo() {
             request = ClientAIConversationRequest()
         } else {
@@ -66,7 +76,11 @@ class AIConversationManager: NSObject {
     func setUpTRTC(withSDKAppId sdkappId: Int32?,  roomId: String?, userId: String?, userSig: String?) {
         let trtcParam = TRTCParams()
         trtcParam.sdkAppId = UInt32(sdkappId ?? 0)
-        trtcParam.strRoomId = roomId ?? ""
+        if (isAppStoreDemo()) {
+            trtcParam.roomId = UInt32(roomId ?? "") ?? 0
+        } else {
+            trtcParam.strRoomId = roomId ?? ""
+        }
         trtcParam.userId = userId ?? ""
         trtcParam.userSig = userSig ?? ""
         trtcCloud.enterRoom(trtcParam, appScene: .audioCall)
@@ -90,13 +104,13 @@ class AIConversationManager: NSObject {
                                                                         userInfo: nil,
                                                                         repeats: true)
         }
-        
+      
     }
     
-    
+  
     
     func stop() {
-        
+       
         request?.stop(taskID: taskId ?? "")
         if !isAppStoreDemo() {
             exit(0)
@@ -108,7 +122,7 @@ class AIConversationManager: NSObject {
         AIConversationManager.instance.timer = nil
         AIConversationManager.instance.trtcCloud.exitRoom()
         TRTCCloud.destroySharedInstance()
-        
+  
     }
     
     func resume() {
@@ -131,7 +145,7 @@ class AIConversationManager: NSObject {
         let payload = [
             "id": TUILogin.getUserID() ?? "" +
             "\(String(describing: AIConversationManager.instance.roomId))" +
-            "\(timestamp)",
+            "\(timestamp)", 
             "timestamp": timestamp,
         ] as [String : Any]
         let dict = [
@@ -162,7 +176,7 @@ class AIConversationManager: NSObject {
             trtcCloud.setAudioRoute(.modeEarpiece)
             AIConversationState.instance.speakerIsOpen.value = false
         }
-        
+       
     }
 }
 
@@ -266,7 +280,7 @@ extension AIConversationManager {
 }
 
 extension AIConversationManager {
-    
+
 }
 
 extension AIConversationManager {
@@ -335,7 +349,7 @@ extension AIConversationManager {
             AIConversationManager.instance.trtcCloud.callExperimentalAPI(jsonStr)
         }
     }
-    
+
 }
 extension AIConversationManager {
     func isAppStoreDemo() -> Bool {

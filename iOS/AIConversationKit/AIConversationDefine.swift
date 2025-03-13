@@ -25,7 +25,7 @@ public class AIConversationDefine {
         public var ttsConfig: String = ""                   // Required field
         public var region: String?
         public var roomId: String?
- 
+        public var denoise: Int?
         enum CodingKeys: String, CodingKey {
             case agentConfig = "AgentConfig"
             case sttConfig = "STTConfig"
@@ -43,7 +43,7 @@ public class AIConversationDefine {
             self.ttsConfig = ""
             self.sttConfig = STTConfig()
             self.region = "ap-beijing"
-            self.roomId = ""
+            self.roomId = TUILogin.getUserID()
         }
 
         
@@ -246,8 +246,6 @@ public class AIConversationDefine {
             return ""
         }
     }
-
-
 
 }
 
