@@ -98,7 +98,7 @@ class MainViewController: UIViewController {
         let userId = "people"
         let secretKey = "xxx"
         let userSig = GenerateTestUserSig.genTestUserSig(sdkAppId: sdkAppId,
-                                                         identifier: userId,
+                                                         userId: userId,
                                                          secrectkey: secretKey)
         TUILogin.login(Int32(sdkAppId), userID: userId, userSig:userSig){
             print("login success")
@@ -215,15 +215,15 @@ extension MainViewController {
         let secretKey = "xxx"
         let aiRobotId = "robot_\(TUILogin.getUserID() ?? "")"
         let aiRobotSig = GenerateTestUserSig.genTestUserSig(sdkAppId: sdkAppId,
-                                                            identifier: aiRobotId,
+                                                            userId: aiRobotId,
                                                             secrectkey: secretKey)
         let startAIparams = StartAIConversationParams()
         startAIparams.agentConfig = AIConversationDefine.AgentConfig.generateDefaultConfig(aiRobotId: aiRobotId,
                                                                                            aiRobotSig: aiRobotSig)
         startAIparams.secretId = "xxx";
         startAIparams.secretKey = "xxx";
-        startAIparams.llmConfig = "{\"LLMType\":\"openai\",\"Model\":\"hunyuan-turbo-latest\",\"SystemPrompt\":\"你是一个个人助手\",\"APIUrl\":\"https://hunyuan.cloud.tencent.com/openai/v1/chat/completions\",\"APIKey\":\"xxx\",\"History\":5,\"Streaming\":true}";
-        startAIparams.ttsConfig = "{\"TTSType\":\"tencent\",\"AppId\":\"xxx\",\"SecretId\":\"xxx\",\"SecretKey\":\"xxx\",\"VoiceType\":\"502001\",\"Speed\":1.25,\"Volume\":5,\"PrimaryLanguage\":1,\"FastVoiceType\":\"\"}";
+        startAIparams.llmConfig = "{\"LLMType\":\"openai\",\"Model\":\"hunyuan-turbo-latest\",\"SystemPrompt\":\"你是一个个人助手\",\"APIUrl\":\"https://hunyuan.cloud.tencent.com/openai/v1/chat/completions\",\"APIKey\":\"xxx\",\"History\":5,\"Streaming\":true}"
+        startAIparams.ttsConfig = "{\"TTSType\":\"tencent\",\"AppId\":\"xxx\",\"SecretId\":\"xxx\",\"SecretKey\":\"xxx\",\"VoiceType\":\"502001\",\"Speed\":1.25,\"Volume\":5,\"PrimaryLanguage\":1,\"FastVoiceType\":\"\"}"
         let vc = AIConversationViewController(aiParams: startAIparams)
         navigationController?.pushViewController(vc, animated: true)
     }

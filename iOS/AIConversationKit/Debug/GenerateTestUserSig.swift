@@ -27,9 +27,7 @@ import zlib
  
 let EXPIRETIME: Int = 604800
 
-
-
-class GenerateTestUserSig {
+public class GenerateTestUserSig {
     
     class func hmac(_ plainText: String, secretKey: String) -> String? {
         let cData = plainText.cString(using: String.Encoding.ascii)
@@ -66,13 +64,12 @@ class GenerateTestUserSig {
         return final
     }
     
-
-    class func genTestUserSig(sdkAppId: Int, identifier: String, secrectkey: String) -> String {
+    public class func genTestUserSig(sdkAppId: Int, userId: String, secrectkey: String) -> String {
         let current = CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970
         let TLSTime: CLong = CLong(floor(current))
         var obj: [String: Any] = [
             "TLS.ver": "2.0",
-            "TLS.identifier": identifier,
+            "TLS.identifier": userId,
             "TLS.sdkappid":sdkAppId,
             "TLS.expire": EXPIRETIME,
             "TLS.time": TLSTime

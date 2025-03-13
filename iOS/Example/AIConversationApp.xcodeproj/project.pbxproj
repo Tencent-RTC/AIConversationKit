@@ -31,7 +31,6 @@
 		1AA95A6FE6A474DA11DD1233 /* Pods-AIConversationApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIConversationApp.debug.xcconfig"; path = "Target Support Files/Pods-AIConversationApp/Pods-AIConversationApp.debug.xcconfig"; sourceTree = "<group>"; };
 		32E5A05C67D40713571E7115 /* Pods_AIConversationApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AIConversationApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3323F5862D579BBE00477311 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		3329314D2D37974B00EC8F5A /* GenerateTestUserSig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateTestUserSig.swift; sourceTree = "<group>"; };
 		332931502D3798FE00EC8F5A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		332931512D3798FE00EC8F5A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		332931532D3798FE00EC8F5A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AIConversationKitAppLocalized.strings; sourceTree = "<group>"; };
@@ -79,7 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				334920502D5CA2B700EB5F57 /* Config.json */,
-				3329314D2D37974B00EC8F5A /* GenerateTestUserSig.swift */,
 				3323F5862D579BBE00477311 /* Config.swift */,
 			);
 			path = Debug;
@@ -296,7 +294,6 @@
 				9535E1902D2BB53E0068C6BC /* AppDelegate.swift in Sources */,
 				9535E1912D2BB53E0068C6BC /* SceneDelegate.swift in Sources */,
 				9535E1922D2BB53E0068C6BC /* ViewController.swift in Sources */,
-				3329314F2D37974B00EC8F5A /* GenerateTestUserSig.swift in Sources */,
 				332931632D3798FE00EC8F5A /* AIConversationKitAppLocalize.swift in Sources */,
 				3323F5872D579BBE00477311 /* Config.swift in Sources */,
 			);
