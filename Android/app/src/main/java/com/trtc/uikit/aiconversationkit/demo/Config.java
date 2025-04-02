@@ -14,7 +14,7 @@ public class Config {
     public static final String SECRET_KEY = "";
     public static final String CONFIG     = "";
 
-    private static final String TAG        = "Config";
+    private static final String TAG        = "AIConfig";
 
     public static AIConversationDefine.StartAIConversationParams parseStartAIConversationParams(String secretId,
                                                                                                 String secretKey,
@@ -51,6 +51,9 @@ public class Config {
 
             params.llmConfig = chatObject.getString("LLMConfig");
             params.ttsConfig = chatObject.getString("TTSConfig");
+            if (configObject.has("region")) {
+                params.region = configObject.getString("region");
+            }
         } catch (JSONException | NullPointerException e) {
             Log.e(TAG, String.format("parseStartAIConversationParams Exception : %s", e.getMessage()));
         }
