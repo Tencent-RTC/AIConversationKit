@@ -43,7 +43,6 @@ public class AIConversationDefine {
             self.ttsConfig = ""
             self.sttConfig = STTConfig()
             self.region = "ap-beijing"
-            self.roomId = TUILogin.getUserID()
         }
 
         
@@ -54,6 +53,7 @@ public class AIConversationDefine {
             try container.encodeIfPresent(sttConfig, forKey: .sttConfig)
             try container.encodeIfPresent(llmConfig, forKey: .llmConfig)
             try container.encodeIfPresent(ttsConfig, forKey: .ttsConfig)
+            try container.encodeIfPresent(region, forKey: .region)
             try container.encodeIfPresent(roomId, forKey: .roomId)
             try container.encode(1, forKey: .roomIdType)
             try container.encodeIfPresent(TUILogin.getSdkAppID(), forKey: .sdkAppid)
@@ -66,6 +66,7 @@ public class AIConversationDefine {
             self.llmConfig = try container.decodeIfPresent(String.self, forKey: .llmConfig) ?? ""
             self.ttsConfig = try container.decodeIfPresent(String.self, forKey: .ttsConfig) ?? ""
             self.roomId = try container.decode(String.self, forKey: .roomId)
+            self.region = try container.decodeIfPresent(String.self, forKey: .region) ?? "ap-beijing"
         }
         
     }

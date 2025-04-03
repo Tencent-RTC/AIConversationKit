@@ -106,7 +106,7 @@ class ClientAIConversationRequest: AIConversationRequest {
         request.setValue(authorization, forHTTPHeaderField: "Authorization")
         request.setValue(action, forHTTPHeaderField: "X-TC-Action")
         request.setValue(version, forHTTPHeaderField: "X-TC-Version")
-        request.setValue("ap-beijing", forHTTPHeaderField: "X-TC-Region")
+        request.setValue(startAiConversationParams?.region, forHTTPHeaderField: "X-TC-Region")
         request.setValue(String(timestamp), forHTTPHeaderField: "X-TC-Timestamp")
         request.setValue(token, forHTTPHeaderField: "X-TC-Token")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -213,7 +213,7 @@ class ClientAIConversationRequest: AIConversationRequest {
         request.setValue(authorization, forHTTPHeaderField: "Authorization")
         request.setValue(action, forHTTPHeaderField: "X-TC-Action")
         request.setValue(version, forHTTPHeaderField: "X-TC-Version")
-        request.setValue("ap-beijing", forHTTPHeaderField: "X-TC-Region")
+        request.setValue(startAiConversationParams?.region, forHTTPHeaderField: "X-TC-Region")
         request.setValue(String(timestamp), forHTTPHeaderField: "X-TC-Timestamp")
         request.setValue(token, forHTTPHeaderField: "X-TC-Token")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
