@@ -42,7 +42,7 @@ public class AIConversationDefine {
             self.llmConfig = ""
             self.ttsConfig = ""
             self.sttConfig = STTConfig()
-            self.roomId = TUILogin.getUserID()
+            self.region = "ap-beijing"
         }
 
         
@@ -66,6 +66,7 @@ public class AIConversationDefine {
             self.llmConfig = try container.decodeIfPresent(String.self, forKey: .llmConfig) ?? ""
             self.ttsConfig = try container.decodeIfPresent(String.self, forKey: .ttsConfig) ?? ""
             self.roomId = try container.decode(String.self, forKey: .roomId)
+            self.region = try container.decodeIfPresent(String.self, forKey: .region) ?? "ap-beijing"
         }
         
     }
