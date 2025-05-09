@@ -53,7 +53,6 @@ public class AIConversationDefine {
             try container.encodeIfPresent(sttConfig, forKey: .sttConfig)
             try container.encodeIfPresent(llmConfig, forKey: .llmConfig)
             try container.encodeIfPresent(ttsConfig, forKey: .ttsConfig)
-            try container.encodeIfPresent(region, forKey: .region)
             try container.encodeIfPresent(roomId, forKey: .roomId)
             try container.encode(1, forKey: .roomIdType)
             try container.encodeIfPresent(TUILogin.getSdkAppID(), forKey: .sdkAppid)
