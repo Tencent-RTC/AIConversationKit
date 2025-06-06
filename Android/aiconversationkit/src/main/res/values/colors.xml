@@ -15,4 +15,8 @@
     <color name="conversation_button_color_primary_default">#4086FF</color>
     <color name="conversation_button_color_primary_disabled">#243047</color>
     <color name="conversation_bg_black_4">#8C000000</color>
+
+    <color name="conversation_color_gray_dark_2">#1F2024</color>
+    <color name="conversation_color_gray_dark_3">#2B2C30</color>
+    <color name="conversation_color_primary_hover">#2B6AD6</color>
 </resources>

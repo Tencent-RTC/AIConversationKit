@@ -16,6 +16,7 @@ public class AIConversationDefine {
         public String      ttsConfig = ""; // Required field
         public String      region    = "ap-beijing";
         public String      roomId    = "";
+        public Denoise     denoise   = Denoise.MODERATE;
     }
 
     public static class AgentConfig implements Serializable {
@@ -29,7 +30,7 @@ public class AIConversationDefine {
         public int     welcomeMessagePriority  = 0;
         public boolean filterOneWord           = true;
 
-        public static AgentConfig generateDefaultConfig(String  aiRobotId, String  aiRobotSig) {
+        public static AgentConfig generateDefaultConfig(String aiRobotId, String aiRobotSig) {
             AgentConfig config = new AgentConfig();
             config.aiRobotId = aiRobotId;
             config.aiRobotSig = aiRobotSig;
@@ -46,6 +47,33 @@ public class AIConversationDefine {
 
         public static STTConfig generateDefaultConfig() {
             return new STTConfig();
+        }
+    }
+
+    public enum Denoise {
+        LIGHT(0),
+        MILD(1),
+        MODERATE(2),
+        HIGH(3),
+        STRONG(4);
+
+        private final int mValue;
+
+        Denoise(int value) {
+            mValue = value;
+        }
+
+        public int getValue() {
+            return mValue;
+        }
+
+        public static Denoise fromInt(int value) {
+            for (Denoise denoise : Denoise.values()) {
+                if (denoise.mValue == value) {
+                    return denoise;
+                }
+            }
+            return MODERATE;
         }
     }
 }
