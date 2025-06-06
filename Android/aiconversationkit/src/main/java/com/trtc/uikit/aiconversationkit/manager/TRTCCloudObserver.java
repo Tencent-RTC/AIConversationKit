@@ -7,6 +7,8 @@ import static com.trtc.uikit.aiconversationkit.state.ConversationState.AIStatus.
 import static com.trtc.uikit.aiconversationkit.state.ConversationState.AIStatus.THOUGHT;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -18,10 +20,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class TRTCCloudObserver extends TRTCCloudListener implements TRTCCloudListener.TRTCAudioFrameListener {
     private static final String TAG = "TRTCCloudObserver";
+
+    private static final int AI_TEXT_DELAY_AFTER_AUDIO_MS = 1000;
+
     private final ConversationState mConversationState;
+    private final Handler           mMainHandler    = new Handler(Looper.getMainLooper());
+    private final TextComparator    mTextComparator = new TextComparator();
 
     public TRTCCloudObserver(ConversationState state) {
         mConversationState = state;
@@ -38,7 +47,7 @@ public class TRTCCloudObserver extends TRTCCloudListener implements TRTCCloudLis
             data = new JSONObject(new String(message));
             type = data.getString("type");
         } catch (JSONException e) {
-            Log.e(TAG, "onRecvCustomCmdMsg JSONException");
+            Log.e(TAG, String.format("onRecvCustomCmdMsg JSONException : %s", e.getMessage()));
             return;
         }
         if (TextUtils.isEmpty(type)) {
@@ -64,7 +73,7 @@ public class TRTCCloudObserver extends TRTCCloudListener implements TRTCCloudLis
             JSONObject payload = data.getJSONObject("payload");
             state = payload.getInt("state");
         } catch (JSONException e) {
-            Log.w(TAG, "handleAIStateData JSONException");
+            Log.e(TAG, String.format("handleAIStateData JSONException : %s", e.getMessage()));
         }
         if (state == -1) {
             return;
@@ -107,14 +116,25 @@ public class TRTCCloudObserver extends TRTCCloudListener implements TRTCCloudLis
             speechText.roundId = payload.getString("roundid");
             speechText.text = payload.getString("text");
             speechText.isSpeechEnded = payload.getBoolean("end");
+            if (TextUtils.equals(speechText.sender, mConversationState.aiRobotUserId)) {
+                speechText.audioTimeStamp = payload.getLong("audio_timestamp");
+            }
         } catch (JSONException e) {
-            Log.w(TAG, "handleSpeechText JSONException");
+            Log.e(TAG, String.format("handleSpeechText JSONException=%s data=%s", e.getMessage(), data.toString()));
         }
         if (TextUtils.equals(speechText.sender, mConversationState.localUserId)) {
             mConversationState.localSpeechText.set(speechText);
-        } else if (TextUtils.equals(speechText.sender, mConversationState.aiRobotUserId)) {
-            mConversationState.aiSpeechText.set(speechText);
+            return;
         }
+        if (!mConversationState.aiSpeechTexts.contains(speechText)) {
+            mConversationState.aiSpeechTexts.insert(speechText, mTextComparator);
+            return;
+        }
+        ConversationState.SpeechText curText = mConversationState.aiSpeechTexts.find(speechText);
+        if (curText.isSpeechEnded) {
+            return;
+        }
+        mConversationState.aiSpeechTexts.change(speechText);
     }
 
     @Override
@@ -137,6 +157,26 @@ public class TRTCCloudObserver extends TRTCCloudListener implements TRTCCloudLis
 
     @Override
     public void onRemoteUserAudioFrame(TRTCCloudDef.TRTCAudioFrame frame, String userId) {
+        if (!TextUtils.equals(userId, mConversationState.aiRobotUserId)) {
+            return;
+        }
+        List<ConversationState.SpeechText> textList = mConversationState.aiSpeechTexts.getList();
+        int size = textList.size();
+        long curTextTimeStamp = mConversationState.aiSpeechText.get().audioTimeStamp;
+        for (int i = 0; i < size; i++) {
+            ConversationState.SpeechText item = textList.get(i);
+            if (item.audioTimeStamp > frame.timestamp) {
+                continue;
+            }
+            if (curTextTimeStamp >= item.audioTimeStamp) {
+                break;
+            }
+            if (frame.timestamp - item.audioTimeStamp > AI_TEXT_DELAY_AFTER_AUDIO_MS) {
+                break;
+            }
+            mMainHandler.post(() -> mConversationState.aiSpeechText.set(item));
+            break;
+        }
     }
 
     @Override
@@ -177,5 +217,17 @@ public class TRTCCloudObserver extends TRTCCloudListener implements TRTCCloudLis
     @Override
     public void onVoiceEarMonitorAudioFrame(TRTCCloudDef.TRTCAudioFrame trtcAudioFrame) {
 
+    }
+
+    private static class TextComparator implements Comparator<ConversationState.SpeechText> {
+        private static final int EQUAL = 0;
+
+        @Override
+        public int compare(ConversationState.SpeechText o1, ConversationState.SpeechText o2) {
+            if (o1 == null || o2 == null) {
+                return EQUAL;
+            }
+            return (int) (o2.audioTimeStamp - o1.audioTimeStamp);
+        }
     }
 }

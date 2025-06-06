@@ -5,6 +5,8 @@ import static com.tencent.liteav.device.TXDeviceManager.TXSystemVolumeType.TXSys
 import static com.tencent.trtc.TRTCCloudDef.TRTC_AUDIO_QUALITY_SPEECH;
 import static com.tencent.trtc.TRTCCloudDef.TRTC_AUDIO_ROUTE_EARPIECE;
 import static com.tencent.trtc.TRTCCloudDef.TRTC_AUDIO_ROUTE_SPEAKER;
+import static com.trtc.uikit.aiconversationkit.view.ConversationConstant.DENOISES;
+import static com.trtc.uikit.aiconversationkit.view.ConversationConstant.INTERRUPT_MODE_SMART;
 
 import android.Manifest;
 import android.content.Context;
@@ -37,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -87,10 +90,12 @@ public class ConversationManager {
         if (TextUtils.isEmpty(params.roomId)) {
             params.roomId = TUILogin.getUserId();
         }
-        enterRoom(params.roomId);
+        enterRoom(params);
         mAIConversationRequest.startConversation(params);
         openLocalAudio();
         mConversationState.strRoomId = params.roomId;
+        mConversationState.interruptMode.set(params.agentConfig.interruptMode);
+        mConversationState.welcomeMessage.set(params.agentConfig.welcomeMessage);
         mFeedbackRequest.fetchRemainingExperienceTime();
         mFeedbackRequest.fetchFeedback();
     }
@@ -108,6 +113,9 @@ public class ConversationManager {
     }
 
     public void interruptConversation() {
+        if (mConversationState.interruptMode.get() == INTERRUPT_MODE_SMART) {
+            return;
+        }
         try {
             long time = System.currentTimeMillis();
             String timeStamp = String.valueOf(time / 1000);
@@ -224,13 +232,23 @@ public class ConversationManager {
                 .request();
     }
 
-    private void enterRoom(String roomId) {
+    private void enterRoom(AIConversationDefine.StartAIConversationParams params) {
         TRTCCloudDef.TRTCParams trtcParams = new TRTCCloudDef.TRTCParams();
         trtcParams.sdkAppId = TUILogin.getSdkAppId();
         trtcParams.userId = TUILogin.getUserId();
-        trtcParams.strRoomId = roomId;
+        if (PackageService.isInternalDemo()) {
+            trtcParams.roomId = Integer.parseInt(params.roomId);
+        } else {
+            trtcParams.strRoomId = params.roomId;
+        }
         trtcParams.userSig = TUILogin.getUserSig();
-        mTRTCCloud.callExperimentalAPI("{\"api\":\"setFramework\",\"params\":{\"component\":25,\"framework\":1,\"language\":1}}");
+        updateAudioConfig(DENOISES[params.denoise.getValue()]);
+        mTRTCCloud.enterRoom(trtcParams, TRTCCloudDef.TRTC_APP_SCENE_AUDIOCALL);
+    }
+
+    private void updateAudioConfig(int denoiseStrength) {
+        mTRTCCloud.callExperimentalAPI("{\"api\":\"setFramework\",\"params\":"
+                + "{\"component\":25,\"framework\":1,\"language\":1}}");
         mTRTCCloud.callExperimentalAPI("{\"api\":\"enableAIDenoise\",\"params\":{\"enable\":true}}");
         // AI denoising version switched to the latest version
         mTRTCCloud.callExperimentalAPI("{\"api\":\"setPrivateConfig\",\"params\":{\"configs\":"
@@ -239,9 +257,27 @@ public class ConversationManager {
         mTRTCCloud.callExperimentalAPI("{\"api\":\"setAudioAINSStyle\",\"params\":{\"style\":4}}");
         mTRTCCloud.callExperimentalAPI("{\"api\":\"enableAudioAGC\",\"params\":{\"enable\":0}}");
         mTRTCCloud.getDeviceManager().setSystemVolumeType(TXSystemVolumeTypeMedia);
-        mTRTCCloud.enterRoom(trtcParams, TRTCCloudDef.TRTC_APP_SCENE_AUDIOCALL);
         // Send mute packets after setting muteAudio
         mTRTCCloud.callExperimentalAPI("{\"api\":\"setLocalAudioMuteMode\",\"params\":{\"mode\":0}}");
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("api", "setPrivateConfig");
+            JSONObject configArraysElement = new JSONObject();
+            configArraysElement.put("key", "Liteav.Audio.common.ains.near.field.threshold");
+            configArraysElement.put("value", Integer.toString(denoiseStrength));
+            configArraysElement.put("default", "50");
+            // The threshold here can be set from 0 to 100, 0 is the weakest, 100 is the strongest, the default is 50,
+            // the larger the value, the stronger the elimination of low-volume human voices.
+            JSONArray configsArrays = new JSONArray();
+            configsArrays.put(configArraysElement);
+            JSONObject configs = new JSONObject();
+            configs.put("configs", configsArrays);
+            jsonObject.put("params", configs);
+            mTRTCCloud.callExperimentalAPI(jsonObject.toString());
+        } catch (JSONException e) {
+            Log.e(TAG, String.format("setAudioDenoiseStrength JSONException : %s", e.getMessage()));
+        }
     }
 
     private String generateRandomRoomId(int numberOfDigits) {

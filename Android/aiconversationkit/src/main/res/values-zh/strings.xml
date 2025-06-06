@@ -4,7 +4,7 @@
     <string name="conversation_language_en">英文</string>
     <string name="conversation_tip_welcome">你好呀，我是腾讯云音视频的 AI 智能助手！你可以体验和我语音对话，问我问题或者寻求建议，我很期待和你聊天。😄</string>
     <string name="conversation_tip_security">对话内容由第三方 AI 生成，仅供体验参考，具体请以实际接入的 AI 模型为准。请勿输入个人信息及其他违法违规内容，合规体验。</string>
-    <string name="conversation_tip_time">体验时长只有 5 分钟，要抓紧时间噢～</string>
+    <string name="conversation_tip_time">体验时长只有 10 分钟，要抓紧时间噢～</string>
     <string name="conversation_voice_dialogue">语音对话</string>
 
     <string name="conversation_ai_state_listening">我在听…</string>
@@ -21,7 +21,8 @@
     <string name="conversation_pause">暂停</string>
     <string name="conversation_continue">继续</string>
     <string name="conversation_hang_up">挂断</string>
-    <string name="conversation_tap_to_interrupt">可以轻触屏幕或者说话打断回答</string>
+    <string name="conversation_tap_to_interrupt">可以轻触屏幕打断回答</string>
+    <string name="conversation_speech_to_interrupt">可以说话打断回答</string>
     <string name="conversation_tip_experience_time_out">体验时长已结束，如需继续体验或了解更多，请联系我们</string>
     <string name="conversation_close">关闭</string>
     <string name="conversation_contact_us">联系我们</string>
