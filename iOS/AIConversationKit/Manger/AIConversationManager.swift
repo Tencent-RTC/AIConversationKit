@@ -107,22 +107,12 @@ class AIConversationManager: NSObject {
       
     }
     
-  
-    
     func stop() {
-       
         request?.stop(taskID: taskId ?? "")
-        if !isAppStoreDemo() {
-            exit(0)
-        }
-        
-        
         AIConversationState.instance.conversationState.value = .stop
         AIConversationManager.instance.timer?.invalidate()
         AIConversationManager.instance.timer = nil
         AIConversationManager.instance.trtcCloud.exitRoom()
-        TRTCCloud.destroySharedInstance()
-  
     }
     
     func resume() {
