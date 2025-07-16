@@ -14,7 +14,7 @@ class AIConversationRequest {
         fatalError("This method must be overridden by subclass")
     }
     
-    func stop(taskID: String?) {
+    func stop(taskID: String) {
         fatalError("This method must be overridden by subclass")
     }
     
