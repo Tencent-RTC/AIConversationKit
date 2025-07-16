@@ -134,7 +134,7 @@ class ClientAIConversationRequest: AIConversationRequest {
        
     }
     
-    override func stop(taskID: String?) {
+    override func stop(taskID: String) {
         guard let secretId =  startAiConversationParams?.secretId else { return }
         guard let secretKey =  startAiConversationParams?.secretKey else { return }
         let token = ""
