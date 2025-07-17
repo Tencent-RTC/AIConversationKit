@@ -72,6 +72,7 @@ class AIConversationManager: NSObject {
         AIConversationState.instance.audioMuted.value = false
         AIConversationState.instance.conversationState.value = .start
         AIConversationManager.instance.roomId = roomId
+        AIConversationManager.instance.robotId = aiParams?.agentConfig.aiRobotId
         enableAIDenoise()
     }
     
