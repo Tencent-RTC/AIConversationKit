@@ -88,7 +88,7 @@ public class ConversationManager {
     public void startConversation(AIConversationDefine.StartAIConversationParams params) {
         Log.d(TAG, "startConversation");
         if (TextUtils.isEmpty(params.roomId)) {
-            params.roomId = TUILogin.getUserId();
+            params.roomId = TUILogin.getUserId() + System.currentTimeMillis();
         }
         enterRoom(params);
         mAIConversationRequest.startConversation(params);

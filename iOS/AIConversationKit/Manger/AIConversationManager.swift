@@ -45,7 +45,9 @@ class AIConversationManager: NSObject {
     func start(aiParams: StartAIConversationParams?) {
         setExperimentConfig(key: "setFramework", params:["component":25 ,"framework": 1, "language":3,])
         startAIParams = aiParams
-        aiParams?.roomId = TUILogin.getUserID()
+        if aiParams?.roomId == nil || aiParams?.roomId?.isEmpty == true {
+            aiParams?.roomId = (TUILogin.getUserID() ?? "") + String(UInt64(Date().timeIntervalSince1970 * 1_000))
+        }
         setUpTRTC(withSDKAppId: TUILogin.getSdkAppID(),
                   roomId: aiParams?.roomId,
                   userId: TUILogin.getUserID(),
