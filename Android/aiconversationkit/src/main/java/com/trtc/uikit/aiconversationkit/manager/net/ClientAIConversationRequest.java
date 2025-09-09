@@ -125,11 +125,13 @@ public class ClientAIConversationRequest implements AIConversationRequest {
             sttMap.put("AlternativeLanguage", params.sttConfig.alternativeLanguage);
         }
         if (!TextUtils.isEmpty(params.sttConfig.customParam)) {
-            sttMap.put("Language", params.sttConfig.customParam);
+            sttMap.put("CustomParam", params.sttConfig.customParam);
         }
         if (!TextUtils.isEmpty(params.sttConfig.hotWordList)) {
-            sttMap.put("hotWordList", params.sttConfig.hotWordList);
+            sttMap.put("HotWordList", params.sttConfig.hotWordList);
         }
+        sttMap.put("VadSilenceTime", params.sttConfig.vadSilenceTime);
+        sttMap.put("VadLevel", params.sttConfig.vadLevel);
 
         HashMap<String, Object> dataMap = new HashMap<>();
         dataMap.put("SdkAppId", TUILogin.getSdkAppId());
