@@ -40,6 +40,7 @@ public class AIConversationDefine {
 
     public static class STTConfig implements Serializable {
         public String       language            = "zh";
+        public int          vadLevel            = 2;
         public List<String> alternativeLanguage = new LinkedList<>();
         public String       customParam         = "";
         public int          vadSilenceTime      = 1000;
