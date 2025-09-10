@@ -155,6 +155,7 @@ public class AIConversationDefine {
     public class STTConfig: ConfigEncodable {
 
         public var language: String?
+        public var vadLevel: Int = 2
         public var alternativeLanguage: [String]?
         public var customParam: String?
         public var vadSilenceTime: Int?
@@ -162,6 +163,7 @@ public class AIConversationDefine {
         
         enum CodingKeys: String, CodingKey {
             case language = "Language"
+            case vadLevel = "VadLevel"
             case alternativeLanguage = "AlternativeLanguage"
             case customParam = "CustomParam"
             case vadSilenceTime = "VadSilenceTime"
@@ -170,18 +172,21 @@ public class AIConversationDefine {
         
         
         public init(language: String = "zh",
+                    vadLevel: Int = 2,
                     alternativeLanguage: [String] = [],
                     customParam: String = "",
                     vadSilenceTime: Int = 1_000,
                     hotWordList: String = "") {
             self.language = language
             self.vadSilenceTime = vadSilenceTime
+            self.vadLevel = vadLevel
            
         }
         
         public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encodeIfPresent(language, forKey: .language)
+            try container.encode(vadLevel, forKey: .vadLevel)
             try container.encodeIfPresent(alternativeLanguage, forKey: .alternativeLanguage)
             try container.encodeIfPresent(customParam, forKey: .customParam)
             try container.encodeIfPresent(vadSilenceTime, forKey: .vadSilenceTime)
