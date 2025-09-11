@@ -5,9 +5,10 @@ Pod::Spec.new do |spec|
     spec.homepage = 'https://cloud.tencent.com/product/trtc'
     spec.authors = 'tencent video cloud'
     spec.summary = 'AI交谈组件'
-    spec.ios.deployment_target = '9.0'
+    spec.ios.deployment_target = '13.0'
     spec.dependency 'SDWebImage'
     spec.dependency 'Masonry'
+    spec.dependency 'SnapKit'
     spec.static_framework = true
     spec.dependency 'TUICore'
     spec.default_subspec = 'Professional'
