@@ -30,22 +30,22 @@ let EXPIRETIME: Int = 604800
 public class GenerateTestUserSig {
     
     class func hmac(_ plainText: String, secretKey: String) -> String? {
-        let cData = plainText.cString(using: String.Encoding.ascii)
-        
-        let cKeyLen = secretKey.lengthOfBytes(using: .ascii)
-        let cDataLen = plainText.lengthOfBytes(using: .ascii)
-        
+        let cData = plainText.cString(using: String.Encoding.utf8)
+
+        let cKeyLen = secretKey.lengthOfBytes(using: .utf8)
+        let cDataLen = plainText.lengthOfBytes(using: .utf8)
+
         var cHMAC = [CUnsignedChar].init(repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         let pointer = cHMAC.withUnsafeMutableBufferPointer { (unsafeBufferPointer) in
             return unsafeBufferPointer
         }
-        guard let cKey = secretKey.cString(using: String.Encoding.ascii) else { return "" }
+        guard let cKey = secretKey.cString(using: String.Encoding.utf8) else { return "" }
         CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), cKey, cKeyLen, cData, cDataLen, pointer.baseAddress)
         guard let baseAddress = pointer.baseAddress else { return "" }
         let data = Data.init(bytes: baseAddress, count: cHMAC.count)
         return data.base64EncodedString(options: [])
     }
-    
+
     class func base64URL(data: Data) -> String {
         let result = data.base64EncodedString(options: Data.Base64EncodingOptions.init(rawValue: 0))
         var final = ""
