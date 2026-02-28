@@ -5,7 +5,7 @@
 
     <application>
         <activity
-            android:name=".AIConversationActivity"
+            android:name=".view.conversation.AIConversationActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

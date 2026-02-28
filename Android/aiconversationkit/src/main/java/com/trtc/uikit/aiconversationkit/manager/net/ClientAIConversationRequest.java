@@ -5,10 +5,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.tencent.qcloud.tuicore.TUILogin;
-import com.trtc.uikit.aiconversationkit.AIConversationDefine;
-import com.trtc.uikit.aiconversationkit.manager.ConversationManager;
-import com.trtc.uikit.aiconversationkit.state.ConversationState;
-import com.trtc.uikit.aiconversationkit.view.ConversationConstant;
+import com.trtc.uikit.aiconversationkit.store.AIConversationConfig;
+import com.trtc.uikit.aiconversationkit.common.Logger;
+import com.trtc.uikit.aiconversationkit.view.conversation.ConversationConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,14 +42,16 @@ public class ClientAIConversationRequest implements AIConversationRequest {
     private       String       mSecretId  = "";
     private       String       mSecretKey = "";
     private       String       mRegion    = "";
+    private       String       mTaskId    = "";
 
     @Override
-    public void startConversation(AIConversationDefine.StartAIConversationParams params) {
-        mSecretId = params.secretId;
-        mSecretKey = params.secretKey;
-        mRegion = params.region;
-        String body = generateStartConversationBody(params);
-        Log.i(TAG, String.format("startConversation roomId=%s userId=%s", params.roomId, TUILogin.getUserId()));
+    public void startConversation(String roomId, AIConversationConfig config) {
+        mSecretId = config.getSecretId();
+        mSecretKey = config.getSecretKey();
+        mRegion = config.getRegion();
+        String body = generateStartConversationBody(roomId, config);
+        Logger.i(TAG, String.format("startConversation roomId:%s userId:%s aiRobotId:%s", roomId,
+                TUILogin.getUserId(), config.getAgentConfig().getAiRobotId()));
 
         Runnable startAIConversationRun = () -> {
             Request request = buildRequest(mSecretId, mSecretKey, VERSION, ACTION_START_AI_CONVERSATION, body,
@@ -60,21 +61,19 @@ public class ClientAIConversationRequest implements AIConversationRequest {
                 ResponseBody responseBody = mClient.newCall(request).execute().body();
                 response = responseBody.string();
             } catch (IOException e) {
-                Log.e(TAG, "startConversation response IOException : " + e.getMessage());
+                Logger.e(TAG, String.format("startConversation response IOException : %s", e.getMessage()));
             } catch (NullPointerException ne) {
-                Log.e(TAG, "startConversation response NullPointerException : " + ne.getMessage());
+                Logger.e(TAG, String.format("startConversation response NullPointerException : %s", ne.getMessage()));
             }
-            Log.i(TAG, "startAIConversation response = " + response);
+            Logger.i(TAG, String.format("startAIConversation response : %s", response));
             if (TextUtils.isEmpty(response)) {
                 return;
             }
-            ConversationState state = ConversationManager.sharedInstance().getConversationState();
-            state.aiRobotUserId = params.agentConfig.aiRobotId;
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                state.conversationTaskId = jsonObject.getJSONObject("Response").getString("TaskId");
+                mTaskId = jsonObject.getJSONObject("Response").getString("TaskId");
             } catch (JSONException e) {
-                Log.e(TAG, "conversationTaskId JSONException : " + e.getMessage());
+                Logger.e(TAG, String.format("conversationTaskId JSONException : %s", e.getMessage()));
             }
         };
         new Thread(startAIConversationRun).start();
@@ -83,7 +82,7 @@ public class ClientAIConversationRequest implements AIConversationRequest {
     @Override
     public void stopConversation() {
         String body = generateStopConversationBody();
-        Log.i(TAG, "stopConversation : " + body);
+        Logger.i(TAG, String.format("stopConversation : %s", body));
 
         Runnable stopAIConversationRun = () -> {
             Request request = buildRequest(mSecretId, mSecretKey, VERSION, ACTION_STOP_AI_CONVERSATION, body,
@@ -93,60 +92,48 @@ public class ClientAIConversationRequest implements AIConversationRequest {
                 ResponseBody responseBody = mClient.newCall(request).execute().body();
                 response = responseBody.string();
             } catch (IOException e) {
-                Log.e(TAG, "startConversation response IOException : " + e.getMessage());
+                Logger.e(TAG, String.format("stopConversation response IOException : %s", e.getMessage()));
             } catch (NullPointerException ne) {
-                Log.e(TAG, "startConversation response NullPointerException : " + ne.getMessage());
+                Logger.e(TAG, String.format("stopConversation response NullPointerException : %s", ne.getMessage()));
             }
-            Log.i(TAG, "stopConversation response = " + response);
+            Logger.i(TAG, String.format("stopConversation response : %S", response));
+            mTaskId = "";
         };
         new Thread(stopAIConversationRun).start();
     }
 
-    private String generateStartConversationBody(AIConversationDefine.StartAIConversationParams params) {
+    private String generateStartConversationBody(String roomId, AIConversationConfig config) {
         HashMap<String, Object> agentMap = new HashMap<>();
-        agentMap.put("UserId", params.agentConfig.aiRobotId);
-        agentMap.put("UserSig", params.agentConfig.aiRobotSig);
+        agentMap.put("UserId", config.getAgentConfig().getAiRobotId());
+        agentMap.put("UserSig", config.getAgentConfig().getAiRobotSig());
         agentMap.put("TargetUserId", TUILogin.getUserId());
-        if (!TextUtils.isEmpty(params.agentConfig.welcomeMessage)) {
-            agentMap.put("WelcomeMessage", params.agentConfig.welcomeMessage);
+        String welcomeMessage = config.getAgentConfig().getWelcomeMessage();
+        if (!TextUtils.isEmpty(welcomeMessage)) {
+            agentMap.put("WelcomeMessage", welcomeMessage);
         }
-        agentMap.put("MaxIdleTime", params.agentConfig.maxIdleTime);
-        agentMap.put("InterruptMode", params.agentConfig.interruptMode);
-        agentMap.put("InterruptSpeechDuration", params.agentConfig.interruptSpeechDuration);
-        agentMap.put("TurnDetectionMode", params.agentConfig.turnDetectionMode);
-        agentMap.put("WelcomeMessagePriority", params.agentConfig.welcomeMessagePriority);
-        agentMap.put("FilterOneWord", params.agentConfig.filterOneWord);
+        agentMap.put("InterruptMode", config.getAgentConfig().getInterruptMode());
 
         HashMap<String, Object> sttMap = new HashMap<>();
-        if (!TextUtils.isEmpty(params.sttConfig.language)) {
-            sttMap.put("Language", params.sttConfig.language);
+        String asrLanguage = config.getSttConfig().getLanguage();
+        if (!TextUtils.isEmpty(asrLanguage)) {
+            sttMap.put("Language", asrLanguage);
         }
-        if (params.sttConfig.alternativeLanguage != null && !params.sttConfig.alternativeLanguage.isEmpty()) {
-            sttMap.put("AlternativeLanguage", params.sttConfig.alternativeLanguage);
-        }
-        if (!TextUtils.isEmpty(params.sttConfig.customParam)) {
-            sttMap.put("CustomParam", params.sttConfig.customParam);
-        }
-        if (!TextUtils.isEmpty(params.sttConfig.hotWordList)) {
-            sttMap.put("HotWordList", params.sttConfig.hotWordList);
-        }
-        sttMap.put("VadSilenceTime", params.sttConfig.vadSilenceTime);
-        sttMap.put("VadLevel", params.sttConfig.vadLevel);
+        sttMap.put("VadLevel", config.getSttConfig().getVadLevel());
 
         HashMap<String, Object> dataMap = new HashMap<>();
         dataMap.put("SdkAppId", TUILogin.getSdkAppId());
-        dataMap.put("RoomId", params.roomId);
+        dataMap.put("RoomId", roomId);
         dataMap.put("RoomIdType", ConversationConstant.ROOM_TYPE_STRING);
         dataMap.put("AgentConfig", agentMap);
         dataMap.put("STTConfig", sttMap);
-        dataMap.put("LLMConfig", params.llmConfig);
-        dataMap.put("TTSConfig", params.ttsConfig);
+        dataMap.put("LLMConfig", config.getLlmConfig());
+        dataMap.put("TTSConfig", config.getTtsConfig());
         return mGson.toJson(dataMap);
     }
 
     private String generateStopConversationBody() {
         HashMap<String, Object> dataMap = new HashMap<>();
-        dataMap.put("TaskId", ConversationManager.sharedInstance().getConversationState().conversationTaskId);
+        dataMap.put("TaskId", mTaskId);
         return mGson.toJson(dataMap);
     }
 

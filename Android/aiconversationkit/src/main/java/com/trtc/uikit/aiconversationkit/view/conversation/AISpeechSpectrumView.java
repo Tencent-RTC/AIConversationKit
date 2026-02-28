@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.tencent.qcloud.tuicore.util.ScreenUtil;
 import com.trtc.tuikit.common.livedata.Observer;
-import com.trtc.uikit.aiconversationkit.manager.ConversationManager;
 
 public class AISpeechSpectrumView extends View {
     private static final int SPECTRUM_COUNT          = 20;
@@ -47,13 +46,11 @@ public class AISpeechSpectrumView extends View {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        ConversationManager.sharedInstance().getConversationState().aiSpectrumData.observe(mSpectrumObserver);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        ConversationManager.sharedInstance().getConversationState().aiSpectrumData.removeObserver(mSpectrumObserver);
     }
 
     @Override

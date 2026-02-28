@@ -6,7 +6,6 @@ import android.util.Log;
 import com.tencent.qcloud.tuicore.TUICore;
 import com.tencent.qcloud.tuicore.interfaces.TUIServiceCallback;
 import com.trtc.uikit.aiconversationkit.manager.ConversationManager;
-import com.trtc.uikit.aiconversationkit.state.ConversationState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,10 +46,10 @@ public class ServerFeedbackRequest implements FeedbackRequest {
                             Log.e(TAG, String.format("fetchFeedback code=%d message==%s", code, message));
                             return;
                         }
-                        ConversationState state = ConversationManager.sharedInstance().getConversationState();
-                        state.isNeedFeedback = bundle.getBoolean("isNeedFeedback");
+                        boolean isNeedFeedback = bundle.getBoolean("isNeedFeedback");
+                        ConversationManager.sharedInstance().isNeedFeedback = isNeedFeedback;
                         Log.d(TAG, String.format("fetchFeedback code=%d isNeedFeedback==%s",
-                                code, state.isNeedFeedback));
+                                code, isNeedFeedback));
                     }
                 });
     }
@@ -67,19 +66,10 @@ public class ServerFeedbackRequest implements FeedbackRequest {
                                     code, message));
                             return;
                         }
-                        String terminal = bundle.getString("terminal");
-                        int remainingExperienceTime;
-                        try {
-                            remainingExperienceTime = Integer.parseInt(terminal);
-                        } catch (NumberFormatException e) {
-                            Log.e(TAG, String.format("fetchRemainingExperienceTime NumberFormatException terminal=%s",
-                                    terminal));
-                            return;
-                        }
+                        int remainingExperienceTime = bundle.getInt("terminal");
                         Log.d(TAG, String.format("fetchRemainingExperienceTime code=%d terminal==%d",
                                 code, remainingExperienceTime));
-                        ConversationState state = ConversationManager.sharedInstance().getConversationState();
-                        state.remainingExperienceTimeS.set(remainingExperienceTime);
+                        ConversationManager.sharedInstance().remainingExperienceTimeS.set(remainingExperienceTime);
                     }
                 });
     }

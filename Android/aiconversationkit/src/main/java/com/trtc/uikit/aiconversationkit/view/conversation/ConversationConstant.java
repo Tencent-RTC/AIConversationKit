@@ -1,4 +1,4 @@
-package com.trtc.uikit.aiconversationkit.view;
+package com.trtc.uikit.aiconversationkit.view.conversation;
 
 public class ConversationConstant {
     public static final int FEEDBACK_UNDO              = 0;
