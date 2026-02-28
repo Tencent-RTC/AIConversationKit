@@ -1,6 +1,7 @@
 package com.trtc.uikit.aiconversationkit.view.conversation;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -12,17 +13,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.tencent.qcloud.tuicore.TUICore;
+import com.tencent.qcloud.tuicore.interfaces.TUIServiceCallback;
 import com.trtc.tuikit.common.livedata.Observer;
 import com.trtc.uikit.aiconversationkit.R;
 import com.trtc.uikit.aiconversationkit.manager.ConversationManager;
 import com.trtc.uikit.aiconversationkit.manager.internal.PackageService;
+import com.trtc.uikit.aiconversationkit.store.AIConversationStoreImpl;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 
 public class ExperienceDurationView extends FrameLayout {
-    private static final long COUNT_DOWN_INTERVAL_MS    = 1000L;
-    private static final int  TIME_DEDUCTION_INTERVAL_S = 10;
-    private static final long COUNT_DOWN_LATER_MS       = TIME_DEDUCTION_INTERVAL_S * 1000 >> 1;
+    private static final String BUSINESS_LOGIN_SERVICE    = "LoginService";
+    private static final String METHOD_GET_USER_MODEL     = "methodGetUserModel";
+    private static final String PARAM_KEY_USER_MODEL      = "paramUserModel";
+    private static final String INTERNAL_USER_PREFIX      = "moa";
+    private static final int    CALL_BACK_CODE_SUCCESS    = 0;
+    private static final long   COUNT_DOWN_INTERVAL_MS    = 1000L;
+    private static final int    TIME_DEDUCTION_INTERVAL_S = 10;
+    private static final long   COUNT_DOWN_LATER_MS       = TIME_DEDUCTION_INTERVAL_S * 1000 >> 1;
 
     private TextView mTvMinute;
     private TextView mTvSecond;
@@ -32,8 +43,9 @@ public class ExperienceDurationView extends FrameLayout {
     private final DecimalFormat     mDecimalFormat         = new DecimalFormat("00");
     private final Observer<Integer> mTimeRemainingObserver = this::initTimeRemaining;
 
-    private long mCountDownRemaining;
-    private long mStartTime;
+    private long    mCountDownRemaining;
+    private long    mStartTime;
+    private boolean mIsMOALogin = false;
 
     public ExperienceDurationView(@NonNull Context context) {
         this(context, null);
@@ -42,27 +54,56 @@ public class ExperienceDurationView extends FrameLayout {
     public ExperienceDurationView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context);
+        checkLoginType();
+    }
+
+    private void checkLoginType() {
+        TUICore.callService(BUSINESS_LOGIN_SERVICE, METHOD_GET_USER_MODEL, null,
+                new TUIServiceCallback() {
+                    @Override
+                    public void onServiceCallback(int code, String message, Bundle bundle) {
+                        if (CALL_BACK_CODE_SUCCESS == code && bundle != null) {
+                            Serializable userModel = bundle.getSerializable(PARAM_KEY_USER_MODEL);
+                            mIsMOALogin = INTERNAL_USER_PREFIX.equals(parseLoginType(userModel));
+                            if (mIsMOALogin) {
+                                setVisibility(GONE);
+                            }
+                        }
+                    }
+                });
+    }
+
+    private String parseLoginType(Serializable userModel) {
+        if (userModel == null) {
+            return null;
+        }
+        try {
+            Field field = userModel.getClass().getField("loginType");
+            return (String) field.get(userModel);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (!PackageService.isInternalDemo()) {
+        if (!PackageService.isInternalDemo() || mIsMOALogin) {
             return;
         }
         mStartTime = SystemClock.elapsedRealtime();
-        ConversationManager.sharedInstance().getConversationState().remainingExperienceTimeS
+        ConversationManager.sharedInstance().remainingExperienceTimeS
                 .observe(mTimeRemainingObserver);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (!PackageService.isInternalDemo()) {
+        if (!PackageService.isInternalDemo() || mIsMOALogin) {
             return;
         }
         mMainHandler.removeCallbacks(mCountDownRun);
-        ConversationManager.sharedInstance().getConversationState().remainingExperienceTimeS
+        ConversationManager.sharedInstance().remainingExperienceTimeS
                 .removeObserver(mTimeRemainingObserver);
     }
 
@@ -73,6 +114,9 @@ public class ExperienceDurationView extends FrameLayout {
     }
 
     private void executeCountDown() {
+        if (mIsMOALogin) {
+            return;
+        }
         updateViewByTimeRemaining();
         if (mCountDownRemaining <= 0) {
             handleTimeout();
@@ -88,10 +132,7 @@ public class ExperienceDurationView extends FrameLayout {
         if (mCountDownRemaining == 0) {
             deductionExperienceTime();
         }
-        ExperienceTimeoutDialogFragment fragment = new ExperienceTimeoutDialogFragment();
-        boolean isNeedFeedback = ConversationManager.sharedInstance().getConversationState().isNeedFeedback;
-        fragment.showDialog(getContext(), "ExperienceTimeoutDialogFragment", isNeedFeedback);
-        ConversationManager.sharedInstance().stopConversation();
+        AIConversationStoreImpl.shared.stopAIConversation(null);
     }
 
     private void deductionExperienceTime() {

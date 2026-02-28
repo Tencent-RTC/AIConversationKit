@@ -1,6 +1,6 @@
 package com.trtc.uikit.aiconversationkit.demo;
 
-import static com.trtc.uikit.aiconversationkit.AIConversationDefine.KEY_START_AI_CONVERSATION;
+import static com.trtc.uikit.aiconversationkit.view.conversation.AIConversationActivity.KEY_START_AI_CONVERSATION;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import androidx.annotation.Nullable;
 
 import com.tencent.qcloud.tuicore.TUILogin;
 import com.tencent.qcloud.tuicore.interfaces.TUICallback;
-import com.trtc.uikit.aiconversationkit.AIConversationActivity;
-import com.trtc.uikit.aiconversationkit.AIConversationDefine;
+import com.trtc.uikit.aiconversationkit.store.AIConversationConfig;
+import com.trtc.uikit.aiconversationkit.view.conversation.AIConversationActivity;
 
 public class SplashActivity extends Activity {
     private static final String TAG = "SplashActivity";
@@ -51,10 +51,9 @@ public class SplashActivity extends Activity {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "TUILogin.login onSuccess");
-                AIConversationDefine.StartAIConversationParams params = Config.parseStartAIConversationParams(
-                        Config.SECRET_ID, Config.SECRET_KEY, Config.CONFIG);
+                AIConversationConfig config = Config.parseAIConversationConfig(Config.SECRET_ID, Config.SECRET_KEY, Config.CONFIG);
                 Intent intent = new Intent(SplashActivity.this, AIConversationActivity.class);
-                intent.putExtra(KEY_START_AI_CONVERSATION, params);
+                intent.putExtra(KEY_START_AI_CONVERSATION, config);
                 startActivity(intent);
                 finish();
             }

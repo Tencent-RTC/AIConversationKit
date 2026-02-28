@@ -39,13 +39,11 @@ public class LocalSpeechSpectrumView extends View {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        ConversationManager.sharedInstance().getConversationState().localSpectrumData.observe(mSpectrumObserver);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        ConversationManager.sharedInstance().getConversationState().localSpectrumData.removeObserver(mSpectrumObserver);
     }
 
     @Override

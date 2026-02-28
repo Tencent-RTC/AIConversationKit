@@ -79,7 +79,7 @@
         android:textSize="18sp"
         android:textColor="@android:color/white"
         android:layout_marginEnd="10dp"
-        app:layout_constraintStart_toStartOf="@+id/conversation_view_enter_suggestions"
+        app:layout_constraintStart_toStartOf="@+id/conversation_view_dialog_satisfaction"
         app:layout_constraintEnd_toStartOf="@+id/conversation_btn_upload_feedback"
         app:layout_constraintTop_toTopOf="@+id/conversation_btn_upload_feedback"/>
 
@@ -94,7 +94,7 @@
         android:textColor="@android:color/white"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toEndOf="@+id/conversation_btn_skip_feedback"
-        app:layout_constraintEnd_toEndOf="@+id/conversation_view_enter_suggestions"
+        app:layout_constraintEnd_toEndOf="@+id/conversation_view_dialog_satisfaction"
         app:layout_constraintTop_toBottomOf="@+id/conversation_view_enter_suggestions"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

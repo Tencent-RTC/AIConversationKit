@@ -24,7 +24,6 @@ import androidx.fragment.app.FragmentManager;
 import com.tencent.qcloud.tuicore.TUICore;
 import com.tencent.qcloud.tuicore.interfaces.TUIServiceCallback;
 import com.trtc.uikit.aiconversationkit.R;
-import com.trtc.uikit.aiconversationkit.view.ConversationConstant;
 import com.trtc.uikit.aiconversationkit.view.feedback.AIConversationFeedbackActivity;
 
 public class ExperienceTimeoutDialogFragment extends DialogFragment {

@@ -1,6 +1,6 @@
 package com.trtc.uikit.aiconversationkit.view.feedback;
 
-import static com.trtc.uikit.aiconversationkit.view.ConversationConstant.KEY_IS_NEED_FEEDBACK;
+import static com.trtc.uikit.aiconversationkit.view.conversation.ConversationConstant.KEY_IS_NEED_FEEDBACK;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,14 +12,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.tencent.qcloud.tuicore.interfaces.TUIServiceCallback;
 import com.trtc.uikit.aiconversationkit.R;
 import com.trtc.uikit.aiconversationkit.manager.ConversationManager;
-import com.trtc.uikit.aiconversationkit.view.ConversationConstant;
+import com.trtc.uikit.aiconversationkit.view.conversation.ConversationConstant;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class AIConversationFeedbackActivity extends AppCompatActivity {
 
-    private EditText mEtSuggestion;
+    private Button           mBtnUpload;
+    private EditText         mEtSuggestion;
+    private FeedbackStarView mViewCallLatency;
+    private FeedbackStarView mViewNoiseSuppression;
+    private FeedbackStarView mViewAIResponse;
+    private FeedbackStarView mViewInteractiveExperience;
 
     private Integer mSurveyDialogSatisfaction    = ConversationConstant.FEEDBACK_UNDO;
     private Integer mSurveyCallLatency           = ConversationConstant.FEEDBACK_UNDO;
@@ -32,6 +37,7 @@ public class AIConversationFeedbackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conversation_activity_ai_conversation_feedback);
         initView();
+        updateViewBySatisfaction(ConversationConstant.FEEDBACK_UNDO);
     }
 
     private void initView() {
@@ -41,79 +47,36 @@ public class AIConversationFeedbackActivity extends AppCompatActivity {
         } else {
             findViewById(R.id.conversation_btn_skip_feedback).setOnClickListener(v -> finish());
         }
-        Button btnUpload = findViewById(R.id.conversation_btn_upload_feedback);
-        btnUpload.setEnabled(false);
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadFeedback();
-            }
-        });
+        mBtnUpload = findViewById(R.id.conversation_btn_upload_feedback);
+        mBtnUpload.setOnClickListener(v -> uploadFeedback());
+
         DialogSatisfactionView viewDialogSatisfaction = findViewById(R.id.conversation_view_dialog_satisfaction);
-        viewDialogSatisfaction.setSurveyCallback(new SurveyCallback() {
-            @Override
-            public void onSurvey(int feedback) {
-                mSurveyDialogSatisfaction = feedback;
-                enableUploadIfNeeded(btnUpload);
-            }
+        viewDialogSatisfaction.setSurveyCallback(feedback -> {
+            mSurveyDialogSatisfaction = feedback;
+            updateViewBySatisfaction(feedback);
         });
-        FeedbackStarView viewCallLatency = findViewById(R.id.conversation_view_call_latency);
-        viewCallLatency.setSurveyCallback(new SurveyCallback() {
-            @Override
-            public void onSurvey(int feedback) {
-                mSurveyCallLatency = feedback;
-                enableUploadIfNeeded(btnUpload);
-            }
-        });
-        FeedbackStarView viewNoiseSuppression = findViewById(R.id.conversation_view_noise_suppression);
-        viewNoiseSuppression.setSurveyCallback(new SurveyCallback() {
-            @Override
-            public void onSurvey(int feedback) {
-                mSurveyNoiseSuppression = feedback;
-                enableUploadIfNeeded(btnUpload);
-            }
-        });
-        FeedbackStarView viewAIResponse = findViewById(R.id.conversation_view_ai_response);
-        viewAIResponse.setSurveyCallback(new SurveyCallback() {
-            @Override
-            public void onSurvey(int feedback) {
-                mSurveyAIResponse = feedback;
-                enableUploadIfNeeded(btnUpload);
-            }
-        });
-        FeedbackStarView viewInteractiveExperience = findViewById(R.id.conversation_view_interactive_experience);
-        viewInteractiveExperience.setSurveyCallback(new SurveyCallback() {
-            @Override
-            public void onSurvey(int feedback) {
-                mSurveyInteractiveExperience = feedback;
-                enableUploadIfNeeded(btnUpload);
-            }
-        });
+
+        mViewCallLatency = findViewById(R.id.conversation_view_call_latency);
+        mViewCallLatency.setSurveyCallback(feedback -> mSurveyCallLatency = feedback);
+        mViewNoiseSuppression = findViewById(R.id.conversation_view_noise_suppression);
+        mViewNoiseSuppression.setSurveyCallback(feedback -> mSurveyNoiseSuppression = feedback);
+        mViewAIResponse = findViewById(R.id.conversation_view_ai_response);
+        mViewAIResponse.setSurveyCallback(feedback -> mSurveyAIResponse = feedback);
+        mViewInteractiveExperience = findViewById(R.id.conversation_view_interactive_experience);
+        mViewInteractiveExperience.setSurveyCallback(feedback -> mSurveyInteractiveExperience = feedback);
         mEtSuggestion = findViewById(R.id.conversation_view_enter_suggestions);
     }
 
-    private void enableUploadIfNeeded(Button btnUpload) {
-        if (!isEnableUploadFeedback()) {
-            return;
-        }
-        btnUpload.setEnabled(true);
-        btnUpload.setBackgroundResource(R.drawable.conversation_bg_upload_feedback);
-    }
-
-    private boolean isEnableUploadFeedback() {
-        if (mSurveyDialogSatisfaction == ConversationConstant.FEEDBACK_UNDO) {
-            return false;
-        }
-        if (mSurveyCallLatency == ConversationConstant.FEEDBACK_UNDO) {
-            return false;
-        }
-        if (mSurveyNoiseSuppression == ConversationConstant.FEEDBACK_UNDO) {
-            return false;
-        }
-        if (mSurveyAIResponse == ConversationConstant.FEEDBACK_UNDO) {
-            return false;
-        }
-        return mSurveyInteractiveExperience != ConversationConstant.FEEDBACK_UNDO;
+    private void updateViewBySatisfaction(int satisfaction) {
+        boolean isReady = satisfaction != ConversationConstant.FEEDBACK_UNDO;
+        mBtnUpload.setEnabled(isReady);
+        mBtnUpload.setBackgroundResource(isReady ? R.drawable.conversation_bg_upload_feedback
+                : R.drawable.conversation_bg_upload_feedback_disabled);
+        mEtSuggestion.setVisibility(isReady ? View.VISIBLE : View.GONE);
+        mViewCallLatency.setVisibility(isReady ? View.VISIBLE : View.GONE);
+        mViewNoiseSuppression.setVisibility(isReady ? View.VISIBLE : View.GONE);
+        mViewAIResponse.setVisibility(isReady ? View.VISIBLE : View.GONE);
+        mViewInteractiveExperience.setVisibility(isReady ? View.VISIBLE : View.GONE);
     }
 
     private void uploadFeedback() {

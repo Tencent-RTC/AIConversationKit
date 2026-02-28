@@ -1,6 +1,7 @@
 import org.gradle.util.VersionNumber
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 def projects = this.rootProject.getAllprojects().stream().map { project -> project.name }.collect()
 
 android {
@@ -8,7 +9,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         multiDexEnabled = true
         targetSdkVersion 33
     }
@@ -34,23 +35,31 @@ android {
         sourceCompatibility roomSourceJavaVersion
         targetCompatibility roomSourceJavaVersion
     }
+
+    kotlinOptions {
+        jvmTarget = roomSourceJavaVersion.toString()
+    }
 }
 
 dependencies {
-    implementation rootProject.getProperties().containsKey("liteavSdk") ? rootProject.ext.liteavSdk : "com.tencent.liteav:LiteAVSDK_TRTC:12.3.0.17115"
+    api rootProject.getProperties().containsKey("common") ? rootProject.ext.common : "io.trtc.uikit:common:2.8.0.634"
+    api(rootProject.getProperties().containsKey("atomicxCoreSdk") ? rootProject.ext.atomicxCoreSdk : "io.trtc.uikit:atomicx-core:4.0.0.110")
+    implementation rootProject.getProperties().containsKey("liteavSdk") ? rootProject.ext.liteavSdk : "com.tencent.liteav:LiteAVSDK_Professional:13.1.0.19885"
     if (projects.contains("tuicore")) {
         api project(':tuicore')
     } else {
         api "com.tencent.liteav.tuikit:tuicore:8.4.6667"
     }
-    if (projects.contains("common")) {
-        api project(':common')
-    } else {
-        api 'io.trtc.uikit:common:2.8.0.634'
-    }
 
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.google.code.gson:gson:2.10.1'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
 }

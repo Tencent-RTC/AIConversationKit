@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 
 import com.trtc.uikit.aiconversationkit.R;
-import com.trtc.uikit.aiconversationkit.view.ConversationConstant;
+import com.trtc.uikit.aiconversationkit.view.conversation.ConversationConstant;
 
 public class DialogSatisfactionView extends FrameLayout implements Survey {
     private ImageFilterView mIfvVeryDissatisfied;
