@@ -11,85 +11,37 @@ import TUICore
 
 let SECRET_ID = ""
 let SECRET_KEY = ""
-var tokenData: [String: Any]? = {
-    if let url = Bundle.main.url(forResource: "Config", withExtension: "json") {
-        do {
-    
-            let data = try Data(contentsOf: url)
-            do {
 
-                let jsonObject = try JSONSerialization.jsonObject(with: data)
-                return jsonObject as? [String: Any]
-            } catch {
-                print("JSON parse err: \(error)")
-                return nil
-            }
-        } catch {
-            print("can't read Config.json: \(error.localizedDescription)")
-        }
-    } else {
-        print("Config.json not found")
+let tokenData: [String: Any]? = {
+    guard let url = Bundle.main.url(forResource: "Config", withExtension: "json"),
+          let data = try? Data(contentsOf: url),
+          let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+        print("Config.json not found or parse failed")
+        return nil
     }
-    return nil
+    return json
 }()
 
-
-
-
-func getStartAIConversationParams() -> StartAIConversationParams? {
-    guard let tokenDict = tokenData else { return nil }
-    let chatConfig = tokenDict ["chatConfig"] as! [String : Any]
-    let chatConfigJson = dictToJsonString(chatConfig)
-    let userinfo = tokenDict ["userInfo"] as! [String : Any]
+func getAIConversationConfig() -> AIConversationConfig? {
+    guard let tokenDict = tokenData,
+          let chatConfig = tokenDict["chatConfig"] as? [String: Any],
+          let userInfo = tokenDict["userInfo"] as? [String: Any],
+          let sdkAppId = chatConfig["SdkAppId"] as? Int,
+          let userId = userInfo["userId"] as? String,
+          let userSig = userInfo["userSig"] as? String else { return nil }
     
-    guard let sdkappid = chatConfig ["SdkAppId"] as? Int32 else { return nil }
-    guard let userId = userinfo ["userId"] as? String else { return nil }
-    guard let userSig = userinfo ["userSig"] as? String else { return nil }
-    TUILogin.login(sdkappid, userID: userId, userSig: userSig) {
-        
-    } fail: { code, err in
+    TUILogin.login(Int32(sdkAppId), userID: userId, userSig: userSig) {} fail: { code, err in
         debugPrint("login failed: \(code) errMsg:\(err ?? "")")
     }
-
-    guard let jsonData = chatConfigJson.data(using: .utf8) else { return nil }
     
-    do {
-        let decoder = JSONDecoder()
-        let config = try decoder.decode(StartAIConversationParams.self, from: jsonData)
-        config.secretId = SECRET_ID
-        config.secretKey = SECRET_KEY
-        return config
-    } catch {
-        print("parse error: \(error)")
+    let keys = ["AgentConfig", "STTConfig", "LLMConfig", "TTSConfig"]
+    let filteredConfig = chatConfig.filter { keys.contains($0.key) }
+    guard let jsonData = try? JSONSerialization.data(withJSONObject: filteredConfig),
+          var config = try? JSONDecoder().decode(AIConversationConfig.self, from: jsonData) else {
+        print("parse AIConversationConfig failed")
         return nil
     }
-}
-
-
-
-func convertJSONSDataToDictionary(_ jsonString: String) -> [String: Any]? {
-
-    do {
-        if let data = jsonString.data(using: .utf8) {
-            let jsonObject = try JSONSerialization.jsonObject(with: data)
-            return jsonObject as? [String: Any]
-        }
-    } catch {
-        print("JSON parse error: \(error)")
-        return nil
-    }
-    return nil
-}
-
-
-func dictToJsonString(_ dict: [String: Any]) -> String {
-    do {
-        let jsonData = try JSONSerialization.data(withJSONObject: dict)
-        if let jsonString = String(data: jsonData, encoding: .utf8) {
-            return jsonString
-        }
-    } catch {
-        print("Error converting dictionary to JSON: \(error)")
-    }
-    return "{}" 
+    config.secretId = SECRET_ID
+    config.secretKey = SECRET_KEY
+    return config
 }
