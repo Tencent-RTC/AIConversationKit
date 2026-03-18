@@ -9,7 +9,7 @@ import Foundation
 import TUICore
 
 let kitName = "AIConversationKit"
-let AIConversationTable = "AIConversationLocalized"
+let AIConversationTable = "AIConversationKitLocalized"
 
 func AIConversationLocalize(_ key: String) -> String {
     if let bundlePath = bundle().path(forResource: TUIGlobalization.getPreferredLanguage() ?? "", ofType: "lproj"),

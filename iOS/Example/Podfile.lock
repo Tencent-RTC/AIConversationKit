@@ -4,29 +4,29 @@ PODS:
     - Masonry
     - RTCCommon
     - SDWebImage
+    - SnapKit
     - TUICore
     - TXLiteAVSDK_Professional
-  - Kingfisher (8.2.0)
+  - Kingfisher (8.8.0)
   - Masonry (1.1.0)
-  - RTCCommon (1.1.0):
-    - SnapKit
-  - SDWebImage (5.20.0):
-    - SDWebImage/Core (= 5.20.0)
-  - SDWebImage/Core (5.20.0)
+  - RTCCommon (1.3.6)
+  - SDWebImage (5.21.7):
+    - SDWebImage/Core (= 5.21.7)
+  - SDWebImage/Core (5.21.7)
   - SnapKit (5.7.1)
-  - TUICore (8.4.6667):
+  - TUICore (8.9.7511):
     - SDWebImage
-    - TUICore/ImSDK_Plus (= 8.4.6667)
-  - TUICore/Base (8.4.6667):
+    - TUICore/ImSDK_Plus (= 8.9.7511)
+  - TUICore/Base (8.9.7511):
     - SDWebImage
-  - TUICore/ImSDK_Plus (8.4.6667):
+  - TUICore/ImSDK_Plus (8.9.7511):
     - SDWebImage
     - TUICore/Base
     - TXIMSDK_Plus_iOS_XCFramework
-  - TXIMSDK_Plus_iOS_XCFramework (8.4.6675)
-  - TXLiteAVSDK_Professional (12.3.16995):
-    - TXLiteAVSDK_Professional/Professional (= 12.3.16995)
-  - TXLiteAVSDK_Professional/Professional (12.3.16995)
+  - TXIMSDK_Plus_iOS_XCFramework (8.9.7511)
+  - TXLiteAVSDK_Professional (13.1.20476):
+    - TXLiteAVSDK_Professional/Professional (= 13.1.20476)
+  - TXLiteAVSDK_Professional/Professional (13.1.20476)
 
 DEPENDENCIES:
   - AIConversationKit/Professional (from `../AIConversationKit.podspec`)
@@ -48,16 +48,16 @@ EXTERNAL SOURCES:
     :path: "../AIConversationKit.podspec"
 
 SPEC CHECKSUMS:
-  AIConversationKit: 2baf8c0d52b26231a4fb108e7c7eb9b941e7091e
-  Kingfisher: 323e5c4ec7983aaace12af655a7b51a7f88a599d
+  AIConversationKit: 2fbcfbc3245485d1f88ea3cce4966fa73c57b5ac
+  Kingfisher: beeaf65ed57dfa710d416aea4093277e8a9b1968
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  RTCCommon: cfd30f124519be2473f8b08d7d77dd1cde778a80
-  SDWebImage: 73c6079366fea25fa4bb9640d5fb58f0893facd8
+  RTCCommon: 728b0a48a0f41ebcfc4c5989883abee7f737d54a
+  SDWebImage: e9fc87c1aab89a8ab1bbd74eba378c6f53be8abf
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
-  TUICore: 798f1db24c5e3ada1db90431904a3f63ff612061
-  TXIMSDK_Plus_iOS_XCFramework: ce4435718ef7d893ed5c0c9cb7ddb81253db9f4c
-  TXLiteAVSDK_Professional: 6e8fa18eeb0e52e6bbbcd97bab9ec9fbdc828df3
+  TUICore: 7360e867205b38f72974e42d094fbb06ea68fe1e
+  TXIMSDK_Plus_iOS_XCFramework: 10893791aa5c27b2b689ae3547878d10aeea9b7b
+  TXLiteAVSDK_Professional: 9ecc756f4222a2667e4a5d852dd006ee7af9b0ac
 
-PODFILE CHECKSUM: cb8da09f90bf3f11f71588e9505c2b4d8bd3049d
+PODFILE CHECKSUM: 3ff240d3b04322e65c017c1243cb3f615bfdf8e8
 
 COCOAPODS: 1.16.2
