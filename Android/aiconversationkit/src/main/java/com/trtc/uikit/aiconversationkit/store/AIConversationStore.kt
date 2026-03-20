@@ -1,6 +1,5 @@
 package com.trtc.uikit.aiconversationkit.store
 
-import io.trtc.tuikit.atomicxcore.api.CompletionHandler
 import kotlinx.coroutines.flow.StateFlow
 import java.io.Serializable
 
@@ -65,4 +64,13 @@ abstract class AIConversationStore {
     abstract fun interruptSpeech()
     abstract fun openLocalMicrophone(completion: CompletionHandler?)
     abstract fun closeLocalMicrophone()
+}
+
+interface CompletionHandler {
+    fun onSuccess()
+
+    fun onFailure(
+        code: Int,
+        desc: String
+    )
 }
