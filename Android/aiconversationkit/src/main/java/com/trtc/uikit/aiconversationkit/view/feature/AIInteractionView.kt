@@ -2,11 +2,11 @@ package com.trtc.uikit.aiconversationkit.view.feature
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.view.isVisible
 import com.trtc.uikit.aiconversationkit.R
 import com.trtc.uikit.aiconversationkit.store.AIConversationStore
 import com.trtc.uikit.aiconversationkit.store.AIStatus
@@ -40,8 +40,8 @@ class AIInteractionView @JvmOverloads constructor(
                 val isCanInterrupt = status == AIStatus.THINKING || status == AIStatus.SPEAKING
                 btnInterruptSpeech?.isEnabled = isCanInterrupt
                 textAIInteraction?.setText(if (isCanInterrupt) R.string.conversation_ai_interaction_interrupting else R.string.conversation_ai_interaction_listening)
-                imageAIStateListening?.isVisible = !isCanInterrupt
-                imageAIStateInterrupting?.isVisible = isCanInterrupt
+                imageAIStateListening?.visibility = if (!isCanInterrupt) View.VISIBLE else View.GONE
+                imageAIStateInterrupting?.visibility = if (isCanInterrupt) View.VISIBLE else View.GONE
                 if (isCanInterrupt) {
                     imageAIStateListening?.stopAnimating()
                 } else {

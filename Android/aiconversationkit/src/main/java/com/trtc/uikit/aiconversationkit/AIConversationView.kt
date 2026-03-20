@@ -3,13 +3,14 @@ package com.trtc.uikit.aiconversationkit
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
-import androidx.core.view.isVisible
+import androidx.core.content.ContextCompat
 import com.trtc.uikit.aiconversationkit.store.AIConversationConfig
+import com.trtc.uikit.aiconversationkit.store.CompletionHandler
 import com.trtc.uikit.aiconversationkit.view.AIConversationControlView
 import com.trtc.uikit.aiconversationkit.view.AIConversationCoreView
 import com.trtc.uikit.aiconversationkit.view.AIConversationSubtitleView
-import io.trtc.tuikit.atomicxcore.api.CompletionHandler
 
 enum class Feature(val value: String) {
     MIC("mic"),
@@ -44,7 +45,7 @@ class AIConversationView @JvmOverloads constructor(
                 Feature.MIC, Feature.AI_INTERACTION ->
                     conversationControlView?.disableFeature(feature)
                 Feature.SUBTITLE ->
-                    conversationSubtitleView?.isVisible = false
+                    conversationSubtitleView?.visibility = View.GONE
             }
         }
     }

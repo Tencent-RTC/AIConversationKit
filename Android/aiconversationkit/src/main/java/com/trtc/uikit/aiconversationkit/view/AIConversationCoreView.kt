@@ -2,15 +2,14 @@ package com.trtc.uikit.aiconversationkit.view
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.trtc.uikit.aiconversationkit.R
 import com.trtc.uikit.aiconversationkit.store.AIConversationConfig
 import com.trtc.uikit.aiconversationkit.store.AIConversationStore
-import io.trtc.tuikit.atomicxcore.api.CompletionHandler
-import androidx.core.graphics.drawable.toDrawable
+import com.trtc.uikit.aiconversationkit.store.CompletionHandler
 
 class AIConversationCoreView @JvmOverloads constructor(
     context: Context,
@@ -31,7 +30,7 @@ class AIConversationCoreView @JvmOverloads constructor(
 
     fun setBackgroundImage(resourceId: Int) {
         if (resourceId == 0) {
-            setBackground(Color.TRANSPARENT.toDrawable())
+            setBackground(ColorDrawable(Color.TRANSPARENT))
         } else {
             setBackground(ContextCompat.getDrawable(context, resourceId))
         }

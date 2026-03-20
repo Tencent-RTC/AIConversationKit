@@ -21,7 +21,6 @@ import com.trtc.uikit.aiconversationkit.manager.internal.PackageService
 import com.trtc.uikit.aiconversationkit.manager.net.AIConversationRequest
 import com.trtc.uikit.aiconversationkit.manager.net.ClientAIConversationRequest
 import com.trtc.uikit.aiconversationkit.manager.net.ServerAIConversationRequest
-import io.trtc.tuikit.atomicxcore.api.CompletionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONArray
