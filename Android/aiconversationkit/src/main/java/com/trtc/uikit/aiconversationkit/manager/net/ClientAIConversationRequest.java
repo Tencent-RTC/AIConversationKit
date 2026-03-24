@@ -112,6 +112,7 @@ public class ClientAIConversationRequest implements AIConversationRequest {
             agentMap.put("WelcomeMessage", welcomeMessage);
         }
         agentMap.put("InterruptMode", config.getAgentConfig().getInterruptMode());
+        agentMap.put("SubtitleMode", 1);
 
         HashMap<String, Object> sttMap = new HashMap<>();
         String asrLanguage = config.getSttConfig().getLanguage();
