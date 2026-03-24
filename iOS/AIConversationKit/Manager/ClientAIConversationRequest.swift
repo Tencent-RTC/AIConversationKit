@@ -214,6 +214,7 @@ class ClientAIConversationRequest: AIConversationRequest {
             jsonDict["SdkAppId"] = Int(TUILogin.getSdkAppID())
             if var agentDict = jsonDict["AgentConfig"] as? [String: Any] {
                 agentDict["TargetUserId"] = TUILogin.getUserID() ?? ""
+                agentDict["SubtitleMode"] = 1
                 jsonDict["AgentConfig"] = agentDict
             }
             let resultData = try JSONSerialization.data(withJSONObject: jsonDict, options: [.sortedKeys])
