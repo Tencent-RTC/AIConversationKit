@@ -351,6 +351,7 @@ internal class AIConversationStoreImpl private constructor(): AIConversationStor
                 message.isCompleted = if (text.isEmpty()) payload.getBoolean("end") else false
             } catch (e: JSONException) {
                 Logger.e(TAG, String.format("handleSpeechText JSONException=%s data=%s", e.message, data.toString()))
+                return
             }
 
             val currentList = _conversationMessageList.value.toMutableList()

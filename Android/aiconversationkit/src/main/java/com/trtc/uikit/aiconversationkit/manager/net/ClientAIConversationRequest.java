@@ -42,7 +42,7 @@ public class ClientAIConversationRequest implements AIConversationRequest {
     private       String       mSecretId  = "";
     private       String       mSecretKey = "";
     private       String       mRegion    = "";
-    private       String       mTaskId    = "";
+    private volatile String    mTaskId    = "";
 
     @Override
     public void startConversation(String roomId, AIConversationConfig config) {
@@ -120,6 +120,7 @@ public class ClientAIConversationRequest implements AIConversationRequest {
             sttMap.put("Language", asrLanguage);
         }
         sttMap.put("VadLevel", config.getSttConfig().getVadLevel());
+        sttMap.put("VadSilenceTime", config.getSttConfig().getVadSilenceTime());
 
         HashMap<String, Object> dataMap = new HashMap<>();
         dataMap.put("SdkAppId", TUILogin.getSdkAppId());
