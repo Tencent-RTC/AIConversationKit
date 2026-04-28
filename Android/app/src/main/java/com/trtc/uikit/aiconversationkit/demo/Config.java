@@ -38,8 +38,8 @@ public class Config {
             if (sttObject.has("Language")) {
                 aiConfig.getSttConfig().setLanguage(sttObject.getString("Language"));
             }
-            if (sttObject.has("VadLevel")) {
-                aiConfig.getSttConfig().setVadLevel(sttObject.getInt("VadSilenceTime"));
+            if (sttObject.has("VadSilenceTime")) {
+                aiConfig.getSttConfig().setVadSilenceTime(sttObject.getInt("VadSilenceTime"));
             }
 
             aiConfig.setLlmConfig(chatObject.getString("LLMConfig"));

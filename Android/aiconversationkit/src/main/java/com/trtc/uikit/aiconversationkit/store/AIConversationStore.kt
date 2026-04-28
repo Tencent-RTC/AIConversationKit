@@ -23,6 +23,7 @@ data class AgentConfig (
 data class STTConfig (
     var language: String = "zh",
     var vadLevel: Int = 2,
+    var vadSilenceTime: Int = 800,
 ): Serializable
 
 data class AIConversationConfig(
@@ -48,7 +49,7 @@ data class ConversationState(
     val conversationMessageList: StateFlow<List<ConversationMessage>>,
     var aiStatus: StateFlow<AIStatus>,
     var isMicOpened: StateFlow<Boolean>,
-): Serializable
+)
 
 abstract class AIConversationStore {
     companion object {
