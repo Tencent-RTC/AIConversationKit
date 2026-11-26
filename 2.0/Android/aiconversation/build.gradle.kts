@@ -25,5 +25,5 @@ android {
 }
 
 dependencies {
-    api(":LiteAVSDK_Professional_13.7.1123.2580@aar")
+    api(":LiteAVSDK_Professional_13.6.0.20757@aar")
 }
