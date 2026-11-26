@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/conversation_bg_color_operate" />
+    <corners
+        android:topLeftRadius="32dp"
+        android:topRightRadius="32dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp"/>
+</shape>

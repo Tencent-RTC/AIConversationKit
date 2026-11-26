@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.trtc.uikit.aiconversationkit.view.feature.CapsuleWaveAnimationView
+        android:id="@+id/conversation_view_ai_state_listening"
+        android:layout_width="50dp"
+        android:layout_height="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/conversation_tv_ai_interaction"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/conversation_image_ai_state_interrupting"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/conversation_ic_ai_state_interrupting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/conversation_tv_ai_interaction"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/conversation_tv_ai_interaction"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/conversation_text_color_primary"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/conversation_btn_interrupt_speech"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

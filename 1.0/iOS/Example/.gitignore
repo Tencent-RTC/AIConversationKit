@@ -1,0 +1,6 @@
+Pods/
+*.xcworkspace
+Podfile.lock
+xcuserdata/
+DerivedData/
+AIConversationApp.xcworkspace/xcuserdata/*.xcuserdatad/UserInterfaceState.xcuserstate
