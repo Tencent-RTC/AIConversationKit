@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+      Android 12+ 系统会额外画一层 Splash Screen（纯色底 + 居中的 launcher 图标），
+      与应用自己的 SplashPage 叠成两个启动页。这里把系统那层设成完全透明：
+      背景透明后露出 windowBackground 的启动图，图标换成透明 drawable、动画时长归零，
+      于是从点击图标到 SplashPage 视觉上只剩一张启动图。
+    -->
+    <style name="Theme.AIConversationDemo" parent="Theme.AIConversationDemo.Base">
+        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+        <item name="android:windowSplashScreenBrandingImage">@null</item>
+    </style>
+
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.AIConversationDemo.Base" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#F4F6FB</item>
+        <item name="android:navigationBarColor">#F4F6FB</item>
+        <!-- 冷启动窗口直接画启动图，避免系统默认的浅色底 + launcher 图标 -->
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="Theme.AIConversationDemo" parent="Theme.AIConversationDemo.Base" />
+
+</resources>
